@@ -1,1 +1,289 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>S.S. Broadband Services - Har Pal, Har Ghar</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@800;900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-content">
+            <div class="logo-spin">
+                <i class="fas fa-wifi"></i>
+            </div>
+            <h2>S.S. Broadband</h2>
+            <p>Loading...</p>
+        </div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="container" id="mainContainer">
+        <!-- Header with Logo -->
+        <header class="header">
+            <div class="logo-container">
+                <div class="logo">
+                    <i class="fas fa-wifi"></i>
+                    <span>S.S. Broadband</span>
+                </div>
+                <div class="slogan">Har Pal, Har Ghar</div>
+            </div>
+        </header>
+
+        <!-- Progress Bar -->
+        <div class="progress-container">
+            <div class="progress-bar" id="progressBar"></div>
+            <div class="progress-steps">
+                <div class="step active" data-step="1">1</div>
+                <div class="step" data-step="2">2</div>
+                <div class="step" data-step="3">3</div>
+                <div class="step" data-step="4">4</div>
+            </div>
+        </div>
+
+        <!-- Form Container -->
+        <div class="form-container">
+            <!-- Step 1: Basic Details -->
+            <form class="form-step active" id="step1">
+                <h2 class="form-title"><i class="fas fa-user"></i> Customer Details</h2>
+                
+                <div class="input-group">
+                    <label for="operatorName">
+                        <i class="fas fa-headset"></i> Operator Name
+                    </label>
+                    <input type="text" id="operatorName" required placeholder="Enter operator name">
+                </div>
+
+                <div class="input-group">
+                    <label for="customerName">
+                        <i class="fas fa-user-circle"></i> Customer Name
+                    </label>
+                    <input type="text" id="customerName" required placeholder="Enter customer full name">
+                </div>
+
+                <div class="input-group">
+                    <label for="phoneNumber">
+                        <i class="fas fa-phone"></i> Mobile Number
+                    </label>
+                    <input type="tel" id="phoneNumber" required placeholder="10-digit mobile number">
+                </div>
+
+                <div class="input-group">
+                    <label for="emailId">
+                        <i class="fas fa-envelope"></i> Email ID
+                    </label>
+                    <input type="email" id="emailId" required placeholder="example@gmail.com">
+                </div>
+
+                <button type="button" class="btn-next" onclick="nextStep(2)">
+                    Next <i class="fas fa-arrow-right"></i>
+                </button>
+            </form>
+
+            <!-- Step 2: Aadhar Details -->
+            <form class="form-step" id="step2">
+                <h2 class="form-title"><i class="fas fa-id-card"></i> Aadhar Details</h2>
+                
+                <div class="input-group">
+                    <label for="aadharNumber">
+                        <i class="fas fa-id-card"></i> Aadhar Number
+                    </label>
+                    <input type="text" id="aadharNumber" required placeholder="12-digit Aadhar number">
+                </div>
+
+                <div class="input-group">
+                    <label for="dob">
+                        <i class="fas fa-birthday-cake"></i> Date of Birth
+                    </label>
+                    <input type="date" id="dob" required>
+                </div>
+
+                <div class="input-group">
+                    <label for="pincode">
+                        <i class="fas fa-map-marker-alt"></i> Pincode
+                    </label>
+                    <input type="text" id="pincode" required placeholder="6-digit pincode">
+                </div>
+
+                <div class="input-group">
+                    <label for="aadharPhoto">
+                        <i class="fas fa-camera"></i> Aadhar Card Front Photo
+                    </label>
+                    <div class="file-upload" onclick="document.getElementById('fileInput').click()">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        <span>Click to upload photo</span>
+                        <input type="file" id="fileInput" accept="image/*" hidden onchange="previewImage(event)">
+                    </div>
+                    <div id="imagePreview" class="image-preview"></div>
+                </div>
+
+                <div class="button-group">
+                    <button type="button" class="btn-prev" onclick="prevStep(1)">
+                        <i class="fas fa-arrow-left"></i> Previous
+                    </button>
+                    <button type="button" class="btn-next" onclick="nextStep(3)">
+                        Next <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </form>
+
+            <!-- Step 3: Plan Selection -->
+            <form class="form-step" id="step3">
+                <h2 class="form-title"><i class="fas fa-tachometer-alt"></i> Select Plan</h2>
+                
+                <div class="plan-section">
+                    <h3><i class="fas fa-bolt"></i> Speed Plan</h3>
+                    <div class="plan-grid" id="speedPlans">
+                        <div class="plan-card" data-value="20" onclick="selectPlan('speed', this)">
+                            <div class="plan-icon"><i class="fas fa-wifi"></i></div>
+                            <h4>20 Mbps</h4>
+                            <p>Basic Plan</p>
+                        </div>
+                        <div class="plan-card" data-value="30" onclick="selectPlan('speed', this)">
+                            <div class="plan-icon"><i class="fas fa-wifi"></i></div>
+                            <h4>30 Mbps</h4>
+                            <p>Standard</p>
+                        </div>
+                        <div class="plan-card" data-value="40" onclick="selectPlan('speed', this)">
+                            <div class="plan-icon"><i class="fas fa-wifi"></i></div>
+                            <h4>40 Mbps</h4>
+                            <p>Fast</p>
+                        </div>
+                        <div class="plan-card" data-value="50" onclick="selectPlan('speed', this)">
+                            <div class="plan-icon"><i class="fas fa-wifi"></i></div>
+                            <h4>50 Mbps</h4>
+                            <p>Premium</p>
+                        </div>
+                        <div class="plan-card" data-value="60" onclick="selectPlan('speed', this)">
+                            <div class="plan-icon"><i class="fas fa-wifi"></i></div>
+                            <h4>60 Mbps</h4>
+                            <p>Ultra</p>
+                        </div>
+                        <div class="plan-card" data-value="70" onclick="selectPlan('speed', this)">
+                            <div class="plan-icon"><i class="fas fa-wifi"></i></div>
+                            <h4>70 Mbps</h4>
+                            <p>Pro</p>
+                        </div>
+                        <div class="plan-card" data-value="100" onclick="selectPlan('speed', this)">
+                            <div class="plan-icon"><i class="fas fa-rocket"></i></div>
+                            <h4>100 Mbps</h4>
+                            <p>Ultimate</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="plan-section">
+                    <h3><i class="far fa-calendar-alt"></i> Validity Period</h3>
+                    <div class="plan-grid" id="validityPlans">
+                        <div class="plan-card" data-value="1" onclick="selectPlan('validity', this)">
+                            <div class="plan-icon"><i class="far fa-clock"></i></div>
+                            <h4>1 Month</h4>
+                            <p>Monthly</p>
+                        </div>
+                        <div class="plan-card" data-value="3" onclick="selectPlan('validity', this)">
+                            <div class="plan-icon"><i class="far fa-calendar"></i></div>
+                            <h4>3 Months</h4>
+                            <p>Quarterly</p>
+                        </div>
+                        <div class="plan-card" data-value="6" onclick="selectPlan('validity', this)">
+                            <div class="plan-icon"><i class="fas fa-calendar-alt"></i></div>
+                            <h4>6 Months</h4>
+                            <p>Half-Yearly</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="button-group">
+                    <button type="button" class="btn-prev" onclick="prevStep(2)">
+                        <i class="fas fa-arrow-left"></i> Previous
+                    </button>
+                    <button type="button" class="btn-next" onclick="nextStep(4)">
+                        Next <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </form>
+
+            <!-- Step 4: IPTV Selection - UPDATED WITH NONE BUTTON -->
+            <form class="form-step" id="step4">
+                <h2 class="form-title"><i class="fas fa-tv"></i> IPTV Service</h2>
+                
+                <div class="iptv-section">
+                    <h3><i class="fas fa-play-circle"></i> Select IPTV App</h3>
+                    <div class="iptv-options">
+                        <div class="iptv-card" data-app="none" onclick="selectIPTVApp('none')">
+                            <div class="iptv-icon"><i class="fas fa-times-circle"></i></div>
+                            <h4>None</h4>
+                            <p>No IPTV Required</p>
+                        </div>
+                        <div class="iptv-card" data-app="onyxplay" onclick="selectIPTVApp('onyxplay')">
+                            <div class="iptv-icon"><i class="fas fa-play"></i></div>
+                            <h4>OnyxPlay</h4>
+                            <p>Live TV & Movies</p>
+                        </div>
+                        <div class="iptv-card" data-app="ziggtv" onclick="selectIPTVApp('ziggtv')">
+                            <div class="iptv-icon"><i class="fas fa-tv"></i></div>
+                            <h4>Zigg TV</h4>
+                            <p>Entertainment</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="iptv-section" id="languageSection" style="display: none;">
+                    <h3><i class="fas fa-language"></i> Select Language (OnyxPlay)</h3>
+                    <div class="language-grid" id="languageOptions">
+                        <div class="lang-card" onclick="selectLanguage(this)">Hindi</div>
+                        <div class="lang-card" onclick="selectLanguage(this)">Marathi</div>
+                        <div class="lang-card" onclick="selectLanguage(this)">Bengali</div>
+                        <div class="lang-card" onclick="selectLanguage(this)">Gujarati</div>
+                        <div class="lang-card" onclick="selectLanguage(this)">Tamil</div>
+                    </div>
+                </div>
+
+                <div class="iptv-section" id="packageSection" style="display: none;">
+                    <h3><i class="fas fa-box"></i> Select Package (Zigg TV)</h3>
+                    <div class="package-grid" id="packageOptions">
+                        <div class="package-card" onclick="selectPackage(this)">Starter Plus</div>
+                        <div class="package-card" onclick="selectPackage(this)">Starter</div>
+                        <div class="package-card" onclick="selectPackage(this)">Silver HD</div>
+                        <div class="package-card" onclick="selectPackage(this)">Bronze HD</div>
+                        <div class="package-card" onclick="selectPackage(this)">Damaka Pack</div>
+                    </div>
+                </div>
+
+                <div class="button-group">
+                    <button type="button" class="btn-prev" onclick="prevStep(3)">
+                        <i class="fas fa-arrow-left"></i> Previous
+                    </button>
+                    <button type="button" class="btn-submit" onclick="submitForm()">
+                        <i class="fas fa-paper-plane"></i> Submit
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Success Message -->
+        <div class="success-message" id="successMessage">
+            <div class="success-icon">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <h2>Successfully Submitted!</h2>
+            <p>Our team will contact you within 2 hours.</p>
+            <button class="btn-home" onclick="resetForm()">
+                <i class="fas fa-home"></i> New Form
+            </button>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>© 2024 S.S. Broadband Services | Har Pal, Har Ghar</p>
+            <p>24×7 Support: 8109581096 | ssbroadbandservices02.com</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
