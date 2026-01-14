@@ -5,55 +5,11 @@
     box-sizing: border-box;
 }
 
-body {
-    font-family: 'Poppins', sans-serif;
-    background: (135deg, #6a11cb 0%, #2575fc 100%);
+body {font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
     min-height: 100vh;
     color: #333;
     overflow-x: hidden;
-    position: relative;
-}
-
-/* WiFi waves animation */
-.wifi-waves {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -1;
-    overflow: hidden;
-}
-
-.wave {
-    position: absolute;
-    border-radius: 50%;
-    border: 2px solid rgba(106, 17, 203, 0.1);
-    animation: ripple 3s linear infinite;
-}
-
-.wave:nth-child(2) {
-    animation-delay: 1s;
-}
-
-.wave:nth-child(3) {
-    animation-delay: 2s;
-}
-
-@keyframes ripple {
-    0% {
-        width: 0;
-        height: 0;
-        top: 50%;
-        left: 50%;
-        opacity: 1;
-    }
-    100% {
-        width: 500px;
-        height: 500px;
-        top: calc(50% - 250px);
-        left: calc(50% - 250px);
-        opacity: 0;
     }
 }
 /* Loading Screen */
