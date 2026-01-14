@@ -5,12 +5,12 @@
     box-sizing: border-box;
 }
 
-body {font-family: 'Poppins', sans-serif;
+body {
+font-family: 'Poppins', sans-serif;
     background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
     min-height: 100vh;
     color: #333;
     overflow-x: hidden;
-    }
 }
 /* Loading Screen */
 .loading-screen {
