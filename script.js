@@ -16,10 +16,9 @@ let formData = {
     areaName: ''
 };
 
-// Configuration (MOVE YOUR SECRETS HERE LATER)
+// Configuration
 const CONFIG = {
     APPS_SCRIPT_URL: 'https://script.google.com/macros/s/AKfycbxFlURVn1DRU6mhGMjO3iXGTI8yEtuOFr9RvpjTGqzue3jPKgQcnQQFWa3BmrwoAIfw1A/exec',
-    // Telegram token removed from here - will be handled by Apps Script
 };
 
 // Initialize
@@ -42,7 +41,105 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     initializeValidation();
+    
+    // Menu Toggle Functionality - NEW
+    const menuToggle = document.getElementById('menuToggle');
+    const sideMenu = document.getElementById('sideMenu');
+    const menuOverlay = document.getElementById('menuOverlay');
+    const closeMenu = document.getElementById('closeMenu');
+
+    if (menuToggle) {
+        menuToggle.addEventListener('click', function() {
+            sideMenu.classList.add('active');
+            menuOverlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+    }
+
+    if (closeMenu) {
+        closeMenu.addEventListener('click', closeMenuFunction);
+    }
+
+    if (menuOverlay) {
+        menuOverlay.addEventListener('click', closeMenuFunction);
+    }
 });
+
+// ===== NEW: Menu Functions =====
+function closeMenuFunction() {
+    document.getElementById('sideMenu').classList.remove('active');
+    document.getElementById('menuOverlay').classList.remove('active');
+    document.body.style.overflow = 'auto';
+}
+
+// ===== NEW: Show Section Function =====
+function showSection(type) {
+    // Hide all sections first
+    document.getElementById('formContainer').style.display = 'none';
+    document.getElementById('dataPackages').style.display = 'none';
+    document.getElementById('iptvPackages').style.display = 'none';
+    document.getElementById('ottPackages').style.display = 'none';
+    document.getElementById('paymentMethod').style.display = 'none';
+    document.getElementById('successMessage').style.display = 'none';
+    
+    // Show selected section
+    let sectionToShow;
+    switch(type) {
+        case 'data':
+            sectionToShow = 'dataPackages';
+            break;
+        case 'iptv':
+            sectionToShow = 'iptvPackages';
+            break;
+        case 'ott':
+            sectionToShow = 'ottPackages';
+            break;
+        case 'payment':
+            sectionToShow = 'paymentMethod';
+            break;
+    }
+    
+    document.getElementById(sectionToShow).style.display = 'block';
+    
+    // Close menu
+    closeMenuFunction();
+    
+    // Hide progress bar
+    document.querySelector('.progress-container').style.display = 'none';
+}
+
+// ===== NEW: Hide Section Function =====
+function hideSection() {
+    // Show form container again
+    document.getElementById('formContainer').style.display = 'block';
+    document.getElementById('dataPackages').style.display = 'none';
+    document.getElementById('iptvPackages').style.display = 'none';
+    document.getElementById('ottPackages').style.display = 'none';
+    document.getElementById('paymentMethod').style.display = 'none';
+    
+    // Show progress bar
+    document.querySelector('.progress-container').style.display = 'block';
+}
+
+// ===== NEW: Plan Selection for New Plans =====
+function selectPackagePlan(element, speed, price, validity) {
+    // Remove selection from all plans
+    document.querySelectorAll('.plan-box').forEach(box => {
+        box.classList.remove('selected');
+    });
+    
+    // Add selection to clicked plan
+    element.classList.add('selected');
+    
+    // Add animation
+    element.style.transform = 'scale(1.05)';
+    setTimeout(() => {
+        element.style.transform = '';
+    }, 300);
+    
+    // Show confirmation message
+    showInfo(`${speed} plan selected - ₹${price}`);
+}
 
 // Form Navigation
 function nextStep(next) {
@@ -305,7 +402,7 @@ function previewImage(event) {
     reader.readAsDataURL(file);
 }
 
-// MAIN FIX: Submit Form with Apps Script
+// Submit Form
 async function submitForm() {
     if (!validateStep(4)) return;
     
@@ -341,28 +438,26 @@ async function submitForm() {
         
         console.log('Submitting data:', submissionData);
         
-        // Send to Apps Script (SECURE METHOD - Telegram token hidden)
+        // Send to Apps Script
         const response = await fetch(CONFIG.APPS_SCRIPT_URL, {
             method: 'POST',
-            mode: 'no-cors', // Important for CORS
+            mode: 'no-cors',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(submissionData)
         });
         
-        // With no-cors mode, we can't read response but data is sent
         console.log('Data sent to Apps Script');
         
-        // Show success immediately
+        // Show success
         showSuccess();
         
-        // Backup: Save to localStorage (optional)
+        // Backup: Save to localStorage
         saveToLocalBackup(submissionData);
         
     } catch (error) {
         console.error('Error:', error);
-        // Even if fetch fails, show success (data saved locally)
         showSuccess();
         showInfo('Data saved locally. Will sync when back online.');
     } finally {
@@ -408,7 +503,6 @@ function saveToLocalBackup(data) {
             backupTime: new Date().toISOString()
         });
         
-        // Keep only last 50 backups
         if (backups.length > 50) {
             backups = backups.slice(-50);
         }
@@ -466,6 +560,9 @@ function resetForm() {
     // Show form, hide success
     document.getElementById('successMessage').style.display = 'none';
     document.querySelector('.form-container').style.display = 'block';
+    
+    // Show progress bar
+    document.querySelector('.progress-container').style.display = 'block';
     
     // Go to step 1
     document.querySelectorAll('.form-step').forEach(step => {
@@ -552,16 +649,6 @@ style.textContent = `
         z-index: 1000;
         animation: slideInRight 0.3s ease;
         box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-    }
-    
-    @keyframes slideInRight {
-        from { transform: translateX(100%); opacity: 0; }
-        to { transform: translateX(0); opacity: 1; }
-    }
-    
-    @keyframes slideOutRight {
-        from { transform: translateX(0); opacity: 1; }
-        to { transform: translateX(100%); opacity: 0; }
     }
 `;
 document.head.appendChild(style);
