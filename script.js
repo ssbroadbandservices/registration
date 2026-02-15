@@ -46,40 +46,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 }, 800);
             }, 3000);
         }
-    }, 500); // Small delay to ensure DOM is ready
+    }, 500);
 
     // Rest of your existing DOMContentLoaded code...
-    const today = new Date().toISOString().split('T')[0];
-    const dobInput = document.getElementById('dob');
-    if (dobInput) {
-        dobInput.max = today;
-    }
-
-    initializeValidation();
-    
-    // Menu Toggle Functionality
-    const menuToggle = document.getElementById('menuToggle');
-    const sideMenu = document.getElementById('sideMenu');
-    const menuOverlay = document.getElementById('menuOverlay');
-    const closeMenu = document.getElementById('closeMenu');
-
-    if (menuToggle) {
-        menuToggle.addEventListener('click', function() {
-            sideMenu.classList.add('active');
-            menuOverlay.classList.add('active');
-            document.body.style.overflow = 'hidden';
-        });
-    }
-
-    if (closeMenu) {
-        closeMenu.addEventListener('click', closeMenuFunction);
-    }
-
-    if (menuOverlay) {
-        menuOverlay.addEventListener('click', closeMenuFunction);
-    }
-});
-// ===== NEW: Menu Functions =====
+});// ===== NEW: Menu Functions =====
 function closeMenuFunction() {
     document.getElementById('sideMenu').classList.remove('active');
     document.getElementById('menuOverlay').classList.remove('active');
