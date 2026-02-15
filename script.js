@@ -23,17 +23,32 @@ const CONFIG = {
 
 // Initialize
 document.addEventListener('DOMContentLoaded', function() {
+    // Loading screen animation with text switch
     setTimeout(() => {
         const loadingScreen = document.getElementById('loadingScreen');
-        if (loadingScreen) {
-            loadingScreen.style.opacity = '0';
+        const textContainer = document.querySelector('.namaste-text-container');
+        
+        if (loadingScreen && textContainer) {
+            // Switch from English to Hindi after 1.5 seconds
             setTimeout(() => {
-                loadingScreen.style.display = 'none';
-                document.getElementById('mainContainer').style.opacity = '1';
-            }, 500);
+                textContainer.classList.add('switching');
+            }, 1500);
+            
+            // Hide loading screen after 3 seconds
+            setTimeout(() => {
+                loadingScreen.style.opacity = '0';
+                setTimeout(() => {
+                    loadingScreen.style.display = 'none';
+                    document.getElementById('mainContainer').style.opacity = '1';
+                    
+                    // Add entrance animation to main content
+                    document.querySelector('.container').style.animation = 'fadeIn 1s ease';
+                }, 800);
+            }, 3000);
         }
-    }, 1500);
+    }, 500); // Small delay to ensure DOM is ready
 
+    // Rest of your existing DOMContentLoaded code...
     const today = new Date().toISOString().split('T')[0];
     const dobInput = document.getElementById('dob');
     if (dobInput) {
@@ -42,7 +57,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     initializeValidation();
     
-    // Menu Toggle Functionality - NEW
+    // Menu Toggle Functionality
     const menuToggle = document.getElementById('menuToggle');
     const sideMenu = document.getElementById('sideMenu');
     const menuOverlay = document.getElementById('menuOverlay');
@@ -64,7 +79,6 @@ document.addEventListener('DOMContentLoaded', function() {
         menuOverlay.addEventListener('click', closeMenuFunction);
     }
 });
-
 // ===== NEW: Menu Functions =====
 function closeMenuFunction() {
     document.getElementById('sideMenu').classList.remove('active');
