@@ -23,33 +23,49 @@ const CONFIG = {
 
 // Initialize
 document.addEventListener('DOMContentLoaded', function() {
-    // Loading screen animation with text switch
     setTimeout(() => {
         const loadingScreen = document.getElementById('loadingScreen');
-        const textContainer = document.querySelector('.namaste-text-container');
-        
-        if (loadingScreen && textContainer) {
-            // Switch from English to Hindi after 1.5 seconds
+        if (loadingScreen) {
+            loadingScreen.style.opacity = '0';
             setTimeout(() => {
-                textContainer.classList.add('switching');
-            }, 1500);
-            
-            // Hide loading screen after 3 seconds
-            setTimeout(() => {
-                loadingScreen.style.opacity = '0';
-                setTimeout(() => {
-                    loadingScreen.style.display = 'none';
-                    document.getElementById('mainContainer').style.opacity = '1';
-                    
-                    // Add entrance animation to main content
-                    document.querySelector('.container').style.animation = 'fadeIn 1s ease';
-                }, 800);
-            }, 3000);
+                loadingScreen.style.display = 'none';
+                document.getElementById('mainContainer').style.opacity = '1';
+            }, 500);
         }
-    }, 500);
+    }, 1500);
 
-    // Rest of your existing DOMContentLoaded code...
-});// ===== NEW: Menu Functions =====
+    const today = new Date().toISOString().split('T')[0];
+    const dobInput = document.getElementById('dob');
+    if (dobInput) {
+        dobInput.max = today;
+    }
+
+    initializeValidation();
+    
+    // Menu Toggle Functionality - NEW
+    const menuToggle = document.getElementById('menuToggle');
+    const sideMenu = document.getElementById('sideMenu');
+    const menuOverlay = document.getElementById('menuOverlay');
+    const closeMenu = document.getElementById('closeMenu');
+
+    if (menuToggle) {
+        menuToggle.addEventListener('click', function() {
+            sideMenu.classList.add('active');
+            menuOverlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+    }
+
+    if (closeMenu) {
+        closeMenu.addEventListener('click', closeMenuFunction);
+    }
+
+    if (menuOverlay) {
+        menuOverlay.addEventListener('click', closeMenuFunction);
+    }
+});
+
+// ===== NEW: Menu Functions =====
 function closeMenuFunction() {
     document.getElementById('sideMenu').classList.remove('active');
     document.getElementById('menuOverlay').classList.remove('active');
