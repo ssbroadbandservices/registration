@@ -22,7 +22,7 @@ const CONFIG = {
 };
 
 // Initialize
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     setTimeout(() => {
         const loadingScreen = document.getElementById('loadingScreen');
         if (loadingScreen) {
@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     initializeValidation();
-    
+
     // Menu Toggle Functionality - NEW
     const menuToggle = document.getElementById('menuToggle');
     const sideMenu = document.getElementById('sideMenu');
@@ -49,7 +49,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const closeMenu = document.getElementById('closeMenu');
 
     if (menuToggle) {
-        menuToggle.addEventListener('click', function() {
+        menuToggle.addEventListener('click', function () {
             sideMenu.classList.add('active');
             menuOverlay.classList.add('active');
             document.body.style.overflow = 'hidden';
@@ -76,15 +76,17 @@ function closeMenuFunction() {
 function showSection(type) {
     // Hide all sections first
     document.getElementById('formContainer').style.display = 'none';
-    document.getElementById('dataPackages').style.display = 'none';
     document.getElementById('iptvPackages').style.display = 'none';
     document.getElementById('ottPackages').style.display = 'none';
     document.getElementById('paymentMethod').style.display = 'none';
     document.getElementById('successMessage').style.display = 'none';
-    
+    document.getElementById('fixBillingSection').style.display = 'none';
+    document.getElementById('pingRateSection').style.display = 'none';
+    document.getElementById('sharingRateSection').style.display = 'none';
+
     // Show selected section
     let sectionToShow;
-    switch(type) {
+    switch (type) {
         case 'data':
             sectionToShow = 'dataPackages';
             break;
@@ -97,13 +99,22 @@ function showSection(type) {
         case 'payment':
             sectionToShow = 'paymentMethod';
             break;
+        case 'fix-billing':
+            sectionToShow = 'fixBillingSection';
+            break;
+        case 'ping-rate':
+            sectionToShow = 'pingRateSection';
+            break;
+        case 'sharing-rate':
+            sectionToShow = 'sharingRateSection';
+            break;
     }
-    
+
     document.getElementById(sectionToShow).style.display = 'block';
-    
+
     // Close menu
     closeMenuFunction();
-    
+
     // Hide progress bar
     document.querySelector('.progress-container').style.display = 'none';
 }
@@ -112,11 +123,13 @@ function showSection(type) {
 function hideSection() {
     // Show form container again
     document.getElementById('formContainer').style.display = 'block';
-    document.getElementById('dataPackages').style.display = 'none';
     document.getElementById('iptvPackages').style.display = 'none';
     document.getElementById('ottPackages').style.display = 'none';
     document.getElementById('paymentMethod').style.display = 'none';
-    
+    document.getElementById('fixBillingSection').style.display = 'none';
+    document.getElementById('pingRateSection').style.display = 'none';
+    document.getElementById('sharingRateSection').style.display = 'none';
+
     // Show progress bar
     document.querySelector('.progress-container').style.display = 'block';
 }
@@ -127,16 +140,16 @@ function selectPackagePlan(element, speed, price, validity) {
     document.querySelectorAll('.plan-box').forEach(box => {
         box.classList.remove('selected');
     });
-    
+
     // Add selection to clicked plan
     element.classList.add('selected');
-    
+
     // Add animation
     element.style.transform = 'scale(1.05)';
     setTimeout(() => {
         element.style.transform = '';
     }, 300);
-    
+
     // Show confirmation message
     showInfo(`${speed} plan selected - ₹${price}`);
 }
@@ -145,20 +158,20 @@ function selectPackagePlan(element, speed, price, validity) {
 function nextStep(next) {
     const currentStep = document.querySelector('.form-step.active');
     const nextStep = document.getElementById('step' + next);
-    
+
     if (!currentStep || !nextStep) return;
-    
+
     if (!validateStep(currentStep.id.replace('step', ''))) {
         return;
     }
-    
+
     currentStep.classList.remove('active');
     currentStep.style.animation = 'slideOutLeft 0.5s ease';
-    
+
     setTimeout(() => {
         currentStep.style.display = 'none';
         currentStep.style.animation = '';
-        
+
         nextStep.style.display = 'block';
         setTimeout(() => {
             nextStep.classList.add('active');
@@ -170,16 +183,16 @@ function nextStep(next) {
 function prevStep(prev) {
     const currentStep = document.querySelector('.form-step.active');
     const prevStep = document.getElementById('step' + prev);
-    
+
     if (!currentStep || !prevStep) return;
-    
+
     currentStep.classList.remove('active');
     currentStep.style.animation = 'slideOutRight 0.5s ease';
-    
+
     setTimeout(() => {
         currentStep.style.display = 'none';
         currentStep.style.animation = '';
-        
+
         prevStep.style.display = 'block';
         setTimeout(() => {
             prevStep.classList.add('active');
@@ -194,7 +207,7 @@ function updateProgressBar(step) {
         const progress = (step - 1) * 25;
         progressBar.style.width = `${progress}%`;
     }
-    
+
     document.querySelectorAll('.step').forEach(s => {
         s.classList.remove('active');
         if (parseInt(s.dataset.step) <= step) {
@@ -207,28 +220,28 @@ function updateProgressBar(step) {
 function initializeValidation() {
     const phoneInput = document.getElementById('phoneNumber');
     if (phoneInput) {
-        phoneInput.addEventListener('input', function(e) {
+        phoneInput.addEventListener('input', function (e) {
             this.value = this.value.replace(/\D/g, '').slice(0, 10);
         });
     }
-    
+
     const aadharInput = document.getElementById('aadharNumber');
     if (aadharInput) {
-        aadharInput.addEventListener('input', function(e) {
+        aadharInput.addEventListener('input', function (e) {
             this.value = this.value.replace(/\D/g, '').slice(0, 12);
         });
     }
-    
+
     const pincodeInput = document.getElementById('pincode');
     if (pincodeInput) {
-        pincodeInput.addEventListener('input', function(e) {
+        pincodeInput.addEventListener('input', function (e) {
             this.value = this.value.replace(/\D/g, '').slice(0, 6);
         });
     }
-    
+
     const emailInput = document.getElementById('emailId');
     if (emailInput) {
-        emailInput.addEventListener('blur', function(e) {
+        emailInput.addEventListener('blur', function (e) {
             const email = this.value;
             if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
                 showError('Please enter valid email ID');
@@ -238,13 +251,13 @@ function initializeValidation() {
 }
 
 function validateStep(step) {
-    switch(step) {
+    switch (step) {
         case '1':
             const opName = document.getElementById('operatorName')?.value || '';
             const custName = document.getElementById('customerName')?.value || '';
             const phone = document.getElementById('phoneNumber')?.value || '';
             const email = document.getElementById('emailId')?.value || '';
-            
+
             if (!opName.trim() || !custName.trim() || !phone.trim() || !email.trim()) {
                 showError('All fields are required');
                 return false;
@@ -257,18 +270,18 @@ function validateStep(step) {
                 showError('Please enter valid email');
                 return false;
             }
-            
+
             formData.operatorName = opName;
             formData.customerName = custName;
             formData.phoneNumber = phone;
             formData.emailId = email;
             return true;
-            
+
         case '2':
             const aadhar = document.getElementById('aadharNumber')?.value || '';
             const dob = document.getElementById('dob')?.value || '';
             const pincode = document.getElementById('pincode')?.value || '';
-            
+
             if (!aadhar.trim() || !dob || !pincode.trim()) {
                 showError('All fields are required');
                 return false;
@@ -281,19 +294,19 @@ function validateStep(step) {
                 showError('Pincode must be 6 digits');
                 return false;
             }
-            
+
             formData.aadharNumber = aadhar;
             formData.dob = dob;
             formData.pincode = pincode;
             return true;
-            
+
         case '3':
             if (!formData.planSpeed || !formData.planValidity) {
                 showError('Please select speed and validity plan');
                 return false;
             }
             return true;
-            
+
         case '4':
             if (!formData.iptvApp) {
                 showError('Please select IPTV app');
@@ -317,14 +330,14 @@ function selectPlan(type, element) {
     const cards = document.querySelectorAll(`#${type}Plans .plan-card`);
     cards.forEach(card => card.classList.remove('selected'));
     element.classList.add('selected');
-    
+
     if (type === 'speed') {
         formData.planSpeed = element.dataset.value + ' Mbps';
     } else {
         const months = parseInt(element.dataset.value);
         formData.planValidity = months + ' Month' + (months > 1 ? 's' : '');
     }
-    
+
     element.style.transform = 'scale(1.1)';
     setTimeout(() => {
         element.style.transform = '';
@@ -336,9 +349,9 @@ function selectIPTVApp(app) {
     const cards = document.querySelectorAll('.iptv-card');
     cards.forEach(card => card.classList.remove('selected'));
     event.target.closest('.iptv-card').classList.add('selected');
-    
+
     formData.iptvApp = app;
-    
+
     if (app === 'onyxplay') {
         document.getElementById('languageSection').style.display = 'block';
         document.getElementById('packageSection').style.display = 'none';
@@ -372,20 +385,20 @@ function selectPackage(element) {
 function previewImage(event) {
     const file = event.target.files[0];
     if (!file) return;
-    
+
     if (!file.type.match('image.*')) {
         showError('Please upload only image files (JPG, PNG, etc.)');
         return;
     }
-    
+
     if (file.size > 5 * 1024 * 1024) {
         showError('File size must be less than 5MB');
         return;
     }
-    
+
     const reader = new FileReader();
-    
-    reader.onload = function(e) {
+
+    reader.onload = function (e) {
         const preview = document.getElementById('imagePreview');
         if (preview) {
             preview.innerHTML = `<img src="${e.target.result}" alt="Aadhar Preview">`;
@@ -393,31 +406,31 @@ function previewImage(event) {
         formData.aadharPhoto = file;
         formData.imageUrl = e.target.result;
     };
-    
-    reader.onerror = function(error) {
+
+    reader.onerror = function (error) {
         console.error('Error reading file:', error);
         showError('Error reading image file. Please try again.');
     };
-    
+
     reader.readAsDataURL(file);
 }
 
 // Submit Form
 async function submitForm() {
     if (!validateStep(4)) return;
-    
+
     const submitBtn = document.querySelector('.btn-submit');
     if (!submitBtn) return;
-    
+
     const originalText = submitBtn.innerHTML;
     submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
     submitBtn.disabled = true;
-    
+
     try {
         // Get area from pincode
         const areaName = await getAreaFromPincode(formData.pincode);
         formData.areaName = areaName;
-        
+
         // Prepare data for submission
         const submissionData = {
             timestamp: new Date().toISOString(),
@@ -435,9 +448,9 @@ async function submitForm() {
             areaName: areaName,
             imageData: formData.imageUrl || ''
         };
-        
+
         console.log('Submitting data:', submissionData);
-        
+
         // Send to Apps Script
         const response = await fetch(CONFIG.APPS_SCRIPT_URL, {
             method: 'POST',
@@ -447,15 +460,15 @@ async function submitForm() {
             },
             body: JSON.stringify(submissionData)
         });
-        
+
         console.log('Data sent to Apps Script');
-        
+
         // Show success
         showSuccess();
-        
+
         // Backup: Save to localStorage
         saveToLocalBackup(submissionData);
-        
+
     } catch (error) {
         console.error('Error:', error);
         showSuccess();
@@ -469,11 +482,11 @@ async function submitForm() {
 // Get Area from Pincode
 async function getAreaFromPincode(pincode) {
     if (!pincode || pincode.length !== 6) return 'Invalid Pincode';
-    
+
     try {
         const response = await fetch(`https://api.postalpincode.in/pincode/${pincode}`);
         const data = await response.json();
-        
+
         if (data[0] && data[0].Status === 'Success' && data[0].PostOffice && data[0].PostOffice[0]) {
             return data[0].PostOffice[0].District || data[0].PostOffice[0].Name;
         }
@@ -487,10 +500,10 @@ async function getAreaFromPincode(pincode) {
 function showSuccess() {
     const formContainer = document.querySelector('.form-container');
     const successMessage = document.getElementById('successMessage');
-    
+
     if (formContainer) formContainer.style.display = 'none';
     if (successMessage) successMessage.style.display = 'block';
-    
+
     updateProgressBar(1);
 }
 
@@ -502,11 +515,11 @@ function saveToLocalBackup(data) {
             ...data,
             backupTime: new Date().toISOString()
         });
-        
+
         if (backups.length > 50) {
             backups = backups.slice(-50);
         }
-        
+
         localStorage.setItem('ss_broadband_backups', JSON.stringify(backups));
         console.log('Backup saved locally. Total backups:', backups.length);
     } catch (error) {
@@ -532,55 +545,55 @@ function resetForm() {
         imageUrl: '',
         areaName: ''
     };
-    
+
     // Reset form fields
     document.querySelectorAll('form input').forEach(input => {
         if (input.type !== 'file') {
             input.value = '';
         }
     });
-    
+
     // Reset file input
     const fileInput = document.getElementById('fileInput');
     if (fileInput) fileInput.value = '';
-    
+
     // Reset selections
     document.querySelectorAll('.selected').forEach(el => {
         el.classList.remove('selected');
     });
-    
+
     // Reset image preview
     const imagePreview = document.getElementById('imagePreview');
     if (imagePreview) imagePreview.innerHTML = '';
-    
+
     // Hide sections
     document.getElementById('languageSection').style.display = 'none';
     document.getElementById('packageSection').style.display = 'none';
-    
+
     // Show form, hide success
     document.getElementById('successMessage').style.display = 'none';
     document.querySelector('.form-container').style.display = 'block';
-    
+
     // Show progress bar
     document.querySelector('.progress-container').style.display = 'block';
-    
+
     // Go to step 1
     document.querySelectorAll('.form-step').forEach(step => {
         step.classList.remove('active');
         step.style.display = 'none';
     });
-    
+
     const step1 = document.getElementById('step1');
     step1.classList.add('active');
     step1.style.display = 'block';
-    
+
     updateProgressBar(1);
 }
 
 // Error Handling
 function showError(message) {
     document.querySelectorAll('.error-message').forEach(el => el.remove());
-    
+
     const errorEl = document.createElement('div');
     errorEl.className = 'error-message';
     errorEl.innerHTML = `
@@ -588,9 +601,9 @@ function showError(message) {
         <span>${message}</span>
         <i class="fas fa-times" onclick="this.parentElement.remove()"></i>
     `;
-    
+
     document.body.appendChild(errorEl);
-    
+
     setTimeout(() => {
         if (errorEl.parentNode) {
             errorEl.style.animation = 'slideOutRight 0.3s ease';
@@ -606,9 +619,9 @@ function showInfo(message) {
         <i class="fas fa-info-circle"></i>
         <span>${message}</span>
     `;
-    
+
     document.body.appendChild(infoEl);
-    
+
     setTimeout(() => {
         if (infoEl.parentNode) {
             infoEl.remove();
