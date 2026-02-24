@@ -258,6 +258,8 @@ body::before {
 
 .menu-items {
     padding: 20px;
+    overflow-y: auto;
+    max-height: calc(100vh - 100px);
 }
 
 .menu-item {
@@ -285,6 +287,8 @@ body::before {
     font-size: 2rem;
     color: #0066FF; /* Royal Blue */
     transition: all 0.3s ease;
+    width: 35px;
+    text-align: center;
 }
 
 .menu-item:hover i {
@@ -784,7 +788,7 @@ body::before {
     transform: translateX(-5px);
 }
 
-/* Plans Section */
+/* Plans Section / Information Section */
 .plans-section {
     background: #1A1A1F; /* Charcoal Secondary */
     border-radius: 30px;
@@ -1000,6 +1004,42 @@ body::before {
     color: #FFFFFF;
     transform: scale(1.1);
     border-color: #D4AF37;
+}
+
+/* Info Cards (For general Info Sections like Fix Billing/Ping Rate) */
+.info-card {
+    background: #0B0B0F;
+    border: 2px solid #D4AF37;
+    border-radius: 20px;
+    padding: 30px;
+    color: #FFFFFF;
+    margin-top: 20px;
+}
+
+.info-card h3 {
+    color: #D4AF37;
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #0066FF;
+    display: inline-block;
+    padding-bottom: 5px;
+}
+
+.info-card p, .info-card ul li {
+    font-size: 1.2rem;
+    margin-bottom: 15px;
+    line-height: 1.6;
+}
+.info-card ul {
+    list-style: none;
+}
+.info-card ul li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.info-card ul li i {
+    color: #E10600;
 }
 
 /* Payment Section */
@@ -1379,8 +1419,3 @@ body::before {
     from { transform: translateX(0); opacity: 1; }
     to { transform: translateX(-100px); opacity: 0; }
 }
-
-/* Layer 3 - Thin animated line under header (already applied to header::after) */
-/* Layer 3 - Step indicator highlight (already applied to .step.active::after) */
-/* Layer 3 - Progress bar (already applied to .progress-bar) */
-/* Layer 3 - Button click effect (already applied to .btn-select:active) */
