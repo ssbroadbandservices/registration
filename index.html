@@ -1,13 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>S.S. Broadband Services - Har Pal, Har Ghar</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Montserrat:wght@800;900&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Montserrat:wght@800;900&display=swap"
+        rel="stylesheet">
 </head>
+
 <body>
     <!-- Loading Screen -->
     <div class="loading-screen" id="loadingScreen">
@@ -51,9 +55,17 @@
                     <i class="fas fa-film"></i>
                     <span>OTT Plan</span>
                 </div>
-                <div class="menu-item" onclick="showSection('data')">
-                    <i class="fas fa-tachometer-alt"></i>
-                    <span>Data Packages</span>
+                <div class="menu-item" onclick="showSection('fix-billing')">
+                    <i class="fas fa-file-invoice-dollar"></i>
+                    <span>Fix Billing</span>
+                </div>
+                <div class="menu-item" onclick="showSection('ping-rate')">
+                    <i class="fas fa-network-wired"></i>
+                    <span>Ping Rate</span>
+                </div>
+                <div class="menu-item" onclick="showSection('sharing-rate')">
+                    <i class="fas fa-share-alt"></i>
+                    <span>Sharing Rate</span>
                 </div>
                 <div class="menu-item" onclick="showSection('payment')">
                     <i class="fas fa-credit-card"></i>
@@ -79,7 +91,7 @@
             <!-- Step 1: Basic Details -->
             <form class="form-step active" id="step1">
                 <h2 class="form-title"><i class="fas fa-user"></i> Customer Details</h2>
-                
+
                 <div class="input-group">
                     <label for="operatorName">
                         <i class="fas fa-headset"></i> Operator Name
@@ -116,7 +128,7 @@
             <!-- Step 2: Aadhar Details -->
             <form class="form-step" id="step2">
                 <h2 class="form-title"><i class="fas fa-id-card"></i> Aadhar Details</h2>
-                
+
                 <div class="input-group">
                     <label for="aadharNumber">
                         <i class="fas fa-id-card"></i> Aadhar Number
@@ -163,7 +175,7 @@
             <!-- Step 3: Plan Selection -->
             <form class="form-step" id="step3">
                 <h2 class="form-title"><i class="fas fa-tachometer-alt"></i> Select Plan</h2>
-                
+
                 <div class="plan-section">
                     <h3><i class="fas fa-bolt"></i> Speed Plan</h3>
                     <div class="plan-grid" id="speedPlans">
@@ -239,7 +251,7 @@
             <!-- Step 4: IPTV Selection -->
             <form class="form-step" id="step4">
                 <h2 class="form-title"><i class="fas fa-tv"></i> IPTV Service</h2>
-                
+
                 <div class="iptv-section">
                     <h3><i class="fas fa-play-circle"></i> Select IPTV App</h3>
                     <div class="iptv-options">
@@ -292,82 +304,6 @@
                     </button>
                 </div>
             </form>
-        </div>
-
-        <!-- Data Packages Section -->
-        <div class="plans-section" id="dataPackages" style="display: none;">
-            <div class="section-header">
-                <h2><i class="fas fa-tachometer-alt"></i> Data Packages</h2>
-                <button class="btn-back" onclick="hideSection()"><i class="fas fa-arrow-left"></i> Back</button>
-            </div>
-            <div class="plans-grid">
-                <div class="plan-box" onclick="selectPackagePlan(this, '30 Mbps', '399', '30 days')">
-                    <div class="plan-badge">Popular</div>
-                    <h3>30 Mbps</h3>
-                    <div class="price">399</div>
-                    <div class="validity"><i class="far fa-calendar-alt"></i> 30 days validity</div>
-                    <ul>
-                        <li><i class="fas fa-check-circle"></i> Unlimited Data</li>
-                        <li><i class="fas fa-check-circle"></i> 24/7 Support</li>
-                    </ul>
-                    <button class="btn-select">Select Plan <i class="fas fa-arrow-right"></i></button>
-                </div>
-
-                <div class="plan-box" onclick="selectPackagePlan(this, '40 Mbps', '420', '30 days')">
-                    <h3>40 Mbps</h3>
-                    <div class="price">420</div>
-                    <div class="validity"><i class="far fa-calendar-alt"></i> 30 days validity</div>
-                    <ul>
-                        <li><i class="fas fa-check-circle"></i> Unlimited Data</li>
-                        <li><i class="fas fa-check-circle"></i> 24/7 Support</li>
-                    </ul>
-                    <button class="btn-select">Select Plan <i class="fas fa-arrow-right"></i></button>
-                </div>
-
-                <div class="plan-box" onclick="selectPackagePlan(this, '50 Mbps', '499', '30 days')">
-                    <h3>50 Mbps</h3>
-                    <div class="price">499</div>
-                    <div class="validity"><i class="far fa-calendar-alt"></i> 30 days validity</div>
-                    <ul>
-                        <li><i class="fas fa-check-circle"></i> Unlimited Data</li>
-                        <li><i class="fas fa-check-circle"></i> 24/7 Support</li>
-                    </ul>
-                    <button class="btn-select">Select Plan <i class="fas fa-arrow-right"></i></button>
-                </div>
-
-                <div class="plan-box" onclick="selectPackagePlan(this, '100 Mbps', '538', '30 days')">
-                    <h3>100 Mbps</h3>
-                    <div class="price">538</div>
-                    <div class="validity"><i class="far fa-calendar-alt"></i> 30 days validity</div>
-                    <ul>
-                        <li><i class="fas fa-check-circle"></i> Unlimited Data</li>
-                        <li><i class="fas fa-check-circle"></i> 24/7 Support</li>
-                    </ul>
-                    <button class="btn-select">Select Plan <i class="fas fa-arrow-right"></i></button>
-                </div>
-
-                <div class="plan-box" onclick="selectPackagePlan(this, '150 Mbps', '656', '30 days')">
-                    <h3>150 Mbps</h3>
-                    <div class="price">656</div>
-                    <div class="validity"><i class="far fa-calendar-alt"></i> 30 days validity</div>
-                    <ul>
-                        <li><i class="fas fa-check-circle"></i> Unlimited Data</li>
-                        <li><i class="fas fa-check-circle"></i> 24/7 Support</li>
-                    </ul>
-                    <button class="btn-select">Select Plan <i class="fas fa-arrow-right"></i></button>
-                </div>
-
-                <div class="plan-box" onclick="selectPackagePlan(this, '200 Mbps', '1000', '30 days')">
-                    <h3>200 Mbps</h3>
-                    <div class="price">1000</div>
-                    <div class="validity"><i class="far fa-calendar-alt"></i> 30 days validity</div>
-                    <ul>
-                        <li><i class="fas fa-check-circle"></i> Unlimited Data</li>
-                        <li><i class="fas fa-check-circle"></i> 24/7 Support</li>
-                    </ul>
-                    <button class="btn-select">Select Plan <i class="fas fa-arrow-right"></i></button>
-                </div>
-            </div>
         </div>
 
         <!-- IPTV Packages Section -->
@@ -511,7 +447,8 @@
                     <button class="btn-select">Select Plan <i class="fas fa-arrow-right"></i></button>
                 </div>
 
-                <div class="plan-box mega-plan" onclick="selectPackagePlan(this, 'Ultimate Pack', 'Contact Us', 'Custom')">
+                <div class="plan-box mega-plan"
+                    onclick="selectPackagePlan(this, 'Ultimate Pack', 'Contact Us', 'Custom')">
                     <h3>Ultimate Pack</h3>
                     <div class="price">258</div>
                     <div class="validity"><i class="far fa-clock"></i> 28 Days Validity</div>
@@ -528,13 +465,105 @@
             </div>
         </div>
 
+        <!-- Fix Billing Section -->
+        <div class="plans-section" id="fixBillingSection" style="display: none;">
+            <div class="section-header">
+                <h2><i class="fas fa-file-invoice-dollar"></i> Fix Billing</h2>
+                <button class="btn-back" onclick="hideSection()"><i class="fas fa-arrow-left"></i> Back</button>
+            </div>
+            <div class="info-card">
+                <h3>Fix Billing Details</h3>
+                <p><strong>Rs. 85 +GST</strong> Per Month</p>
+                <p><strong>OTC Payment =</strong> Rs. 5,900 (Compulsory)</p>
+                <p>One month advance according to your bandwidth</p>
+            </div>
+        </div>
+
+        <!-- Ping Rate Section -->
+        <div class="plans-section" id="pingRateSection" style="display: none;">
+            <div class="section-header">
+                <h2><i class="fas fa-network-wired"></i> Ping Rate</h2>
+                <button class="btn-back" onclick="hideSection()"><i class="fas fa-arrow-left"></i> Back</button>
+            </div>
+            <div class="info-card">
+                <h3>Ping Rate Details</h3>
+                <p><strong>Rs. 145</strong> upto 50 MBps</p>
+                <p><strong>Rs. 190</strong> upto 60 MBps to 100 MBps</p>
+                <p><em>Condition-</em> operator have to add minimum 60 users in one month</p>
+                <p><strong>OTC-</strong> Rs. 5,900</p>
+            </div>
+        </div>
+
+        <!-- Sharing Rate Section -->
+        <div class="plans-section" id="sharingRateSection" style="display: none;">
+            <div class="section-header">
+                <h2><i class="fas fa-share-alt"></i> Sharing Rate</h2>
+                <button class="btn-back" onclick="hideSection()"><i class="fas fa-arrow-left"></i> Back</button>
+            </div>
+            <div class="info-card" style="margin-bottom: 30px; border-color: #0066FF;">
+                <h3><i class="fas fa-info-circle" style="color: #0066FF;"></i> Important Note</h3>
+                <p>Sabhi plans <strong>50-50 ratio</strong> mein rahenge.</p>
+            </div>
+            <div class="plans-grid">
+                <div class="plan-box">
+                    <div class="plan-badge">Popular</div>
+                    <h3>30 MBps</h3>
+                    <div class="price">399</div>
+                    <div class="validity"><i class="far fa-calendar-alt"></i> 30 days validity</div>
+                    <ul>
+                        <li><i class="fas fa-balance-scale"></i> 50-50 Ratio</li>
+                    </ul>
+                </div>
+                <div class="plan-box">
+                    <h3>40 MBps</h3>
+                    <div class="price">420</div>
+                    <div class="validity"><i class="far fa-calendar-alt"></i> 30 days validity</div>
+                    <ul>
+                        <li><i class="fas fa-balance-scale"></i> 50-50 Ratio</li>
+                    </ul>
+                </div>
+                <div class="plan-box">
+                    <h3>50 MBps</h3>
+                    <div class="price">499</div>
+                    <div class="validity"><i class="far fa-calendar-alt"></i> 30 days validity</div>
+                    <ul>
+                        <li><i class="fas fa-balance-scale"></i> 50-50 Ratio</li>
+                    </ul>
+                </div>
+                <div class="plan-box">
+                    <h3>100 MBps</h3>
+                    <div class="price">538</div>
+                    <div class="validity"><i class="far fa-calendar-alt"></i> 30 days validity</div>
+                    <ul>
+                        <li><i class="fas fa-balance-scale"></i> 50-50 Ratio</li>
+                    </ul>
+                </div>
+                <div class="plan-box">
+                    <h3>150 MBps</h3>
+                    <div class="price">656</div>
+                    <div class="validity"><i class="far fa-calendar-alt"></i> 30 days validity</div>
+                    <ul>
+                        <li><i class="fas fa-balance-scale"></i> 50-50 Ratio</li>
+                    </ul>
+                </div>
+                <div class="plan-box">
+                    <h3>200 MBps</h3>
+                    <div class="price">1000</div>
+                    <div class="validity"><i class="far fa-calendar-alt"></i> 30 days validity</div>
+                    <ul>
+                        <li><i class="fas fa-balance-scale"></i> 50-50 Ratio</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
         <!-- Payment Method Section -->
         <div class="payment-section" id="paymentMethod" style="display: none;">
             <div class="section-header">
                 <h2><i class="fas fa-credit-card"></i> Payment Method</h2>
                 <button class="btn-back" onclick="hideSection()"><i class="fas fa-arrow-left"></i> Back</button>
             </div>
-            
+
             <div class="payment-container">
                 <div class="qr-section">
                     <h3>📱 Scan & Pay (GPay / Any UPI App)</h3>
@@ -550,11 +579,12 @@
                         <div>
                             <p>🙏 while making the payment, Write the reason in the discription:</p>
                             <p><strong>"Broadband Payment - [आपका नाम] - [मोबाइल नंबर]"</strong></p>
-                            <p style="font-size: 0.9rem; margin-top: 10px;">Please write your name and mobile number in payment note.</p>
+                            <p style="font-size: 0.9rem; margin-top: 10px;">Please write your name and mobile number in
+                                payment note.</p>
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="payment-instructions">
                     <h4><i class="fas fa-list-ol"></i> Payment Instructions:</h4>
                     <ol>
@@ -565,7 +595,7 @@
                         <li>Complete payment and take screenshot</li>
                         <li>Share screenshot on WhatsApp: <strong>9516688921</strong></li>
                     </ol>
-                    
+
                     <div class="contact-support">
                         <p><i class="fas fa-headset"></i> Payment Support: 9516688921</p>
                         <p><i class="fab fa-whatsapp"></i> WhatsApp: 8959334650</p>
@@ -598,4 +628,5 @@
 
     <script src="script.js"></script>
 </body>
+
 </html>
