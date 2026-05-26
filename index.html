@@ -19,18 +19,63 @@
     <!-- Loading Screen -->
     <div class="loading-screen" id="loadingScreen">
         <div class="loading-content">
-            <div class="loading-logo-wrap">
-                <img src="logo.png" alt="S.S. Broadband" class="loading-logo"
-                    onerror="this.style.display='none';document.getElementById('loadingFallback').style.display='flex'">
-                <div id="loadingFallback" class="loading-fallback">
-                    <i class="fas fa-wifi"></i>
-                    <span>S.S. Broadband</span>
+            <div class="modern-loader-container">
+                <div class="loader-ring ring-outer"></div>
+                <div class="loader-ring ring-inner"></div>
+                <div class="loader-spinner"></div>
+                <div class="loader-center">
+                    <img src="logo.png" alt="Logo" class="loader-logo-img"
+                        onerror="this.src='https://cdn-icons-png.flaticon.com/512/93/93158.png'">
+                </div>
+                <!-- Mini Orbiting Icons -->
+                <div class="mini-icons">
+                    <div class="mi mi-1"><i class="fas fa-wifi"></i></div>
+                    <div class="mi mi-2"><i class="fas fa-server"></i></div>
+                    <div class="mi mi-3"><i class="fas fa-broadcast-tower"></i></div>
+                    <div class="mi mi-4"><i class="fas fa-signal"></i></div>
                 </div>
             </div>
-            <div class="loading-bar-track">
-                <div class="loading-bar-fill" id="loadingBarFill"></div>
+            <div class="loading-info-modern">
+                <h2 class="wait-title">Please wait a moment</h2>
+
+                <div class="modern-progress-box">
+                    <div class="modern-progress-bar">
+                        <div class="progress-fill-glow" id="loadingBarFill"></div>
+                    </div>
+                    <div class="progress-stats">
+                        <span id="loadPercent">0%</span>
+                    </div>
+                </div>
+
+                <p class="loading-text" id="loadingText">Connecting to fiber network...</p>
             </div>
-            <p class="loading-text">Connecting you to the future...</p>
+        </div>
+    </div>
+
+    <!-- Welcome / Verification Overlay -->
+    <div class="welcome-overlay" id="welcomeOverlay">
+        <div class="welcome-card" id="welcomeCard">
+            <!-- Step 1: Verification -->
+            <div id="verifyStep" class="welcome-step active">
+                <div class="verify-icon">
+                    <i class="fas fa-user-check"></i>
+                </div>
+                <h2 class="verify-title">System Verified</h2>
+                <p class="verify-tagline">Access Authorized: S.S. Broadband Operator </p>
+                <div class="auth-line"></div>
+            </div>
+            <!-- Step 2: Welcome / Namaste -->
+            <div id="namasteStep" class="welcome-step">
+                <div class="namaste-animation">
+                    <div class="namaste-glow"></div>
+                    <div class="namaste-hands">🙏</div>
+                    <div class="namaste-particles" id="namasteParticles"></div>
+                </div>
+                <div class="greeting-wrapper">
+                    <h2 class="namaste-text" id="greetingText">नमस्ते</h2>
+                </div>
+                <p class="namaste-welcome">Connecting the family together.</p>
+            </div>
         </div>
     </div>
 
@@ -63,8 +108,7 @@
                 Plan</a>
             <a href="#" class="menu-link" onclick="showSection('ott'); return false;"><i class="fas fa-film"></i> OTT
                 Plan</a>
-            <a href="#" class="menu-link" onclick="showSection('data'); return false;"><i class="fas fa-rocket"></i>
-                Data Plans</a>
+
             <a href="#" class="menu-link" onclick="showSection('sharing-rate'); return false;"><i
                     class="fas fa-share-alt"></i> Sharing Rate</a>
             <a href="#" class="menu-link" onclick="showSection('fix-billing'); return false;"><i
@@ -98,7 +142,7 @@
                     <p class="hero-subtitle reveal-up delay-3">Experience internet so fast, you forget it's there.
                         Register below for a free installation today.</p>
                     <div class="hero-actions reveal-up delay-4">
-                        <button class="btn btn-primary" onclick="scrollToSection('booking')">Register Now <i
+                        <button class="btn btn-primary" onclick="scrollToSection('registrationForm')">Register Now <i
                                 class="fas fa-arrow-down"></i></button>
                         <button class="btn btn-outline" onclick="toggleMenu()">View Plans <i
                                 class="fas fa-bars"></i></button>
@@ -118,7 +162,7 @@
                 <div class="container">
                     <div class="stats-grid reveal-up">
                         <div class="stat-item">
-                            <div class="stat-number">5000+</div>
+                            <div class="stat-number">1k+</div>
                             <div class="stat-label">Happy Customers</div>
                         </div>
                         <div class="stat-item">
@@ -167,11 +211,12 @@
 
                             <div class="contact-hint mt-4">
                                 <p><i class="fas fa-headset"></i> Support: <strong>8959334650</strong> /
-                                    <strong>9516688921</strong></p>
+                                    <strong>9516688921</strong>
+                                </p>
                             </div>
                         </div>
 
-                        <div class="booking-form-area">
+                        <div class="booking-form-area" id="registrationForm">
                             <!-- Step Progress -->
                             <div class="form-progress">
                                 <div class="fp-step active" data-step="1">
@@ -313,7 +358,8 @@
                                         <p class="mini-label"><i class="fas fa-play-circle"></i> Select IPTV App</p>
                                         <div class="iptv-choice-grid">
                                             <div class="iptv-chip" data-app="none" onclick="selectIPTVApp('none',this)">
-                                                <i class="fas fa-times-circle"></i> None</div>
+                                                <i class="fas fa-times-circle"></i> None
+                                            </div>
                                             <div class="iptv-chip" data-app="onyxplay"
                                                 onclick="selectIPTVApp('onyxplay',this)"><i class="fas fa-play"></i>
                                                 OnyxPlay</div>
@@ -360,73 +406,7 @@
 
         <!-- ===== SECTION VIEWS (Accessible via ☰ menu only) ===== -->
 
-        <!-- Data Plans -->
-        <div id="view-data" class="section-view" style="display:none">
-            <div class="container">
-                <div class="section-view-header">
-                    <button class="btn btn-ghost btn-back" onclick="goHome()"><i class="fas fa-arrow-left"></i>
-                        Back</button>
-                    <h2><i class="fas fa-rocket"></i> Data Plans</h2>
-                    <div></div>
-                </div>
-                <div class="grid plan-grid">
-                    <div class="card plan-card">
-                        <div class="popular-tag" style="background:#6E7485">Best for CCTV only</div>
-                        <div class="plan-speed">20 Mbps</div>
-                        <div class="plan-price"><span class="rupee">₹</span>180<span class="period">/-</span></div>
-                        <ul class="plan-perks">
-                            <li><i class="fas fa-infinity"></i> Unlimited Data</li>
-                            <li><i class="fas fa-headset"></i> 24×7 Support</li>
-                            <li><i class="fas fa-tools"></i> Free Installation</li>
-                        </ul>
-                    </div>
-                    <div class="card plan-card">
-                        <div class="popular-tag" style="background:#059669">Social Media</div>
-                        <div class="plan-speed">40 Mbps</div>
-                        <div class="plan-price"><span class="rupee">₹</span>440<span class="period">/-</span></div>
-                        <ul class="plan-perks">
-                            <li><i class="fas fa-infinity"></i> Unlimited Data</li>
-                            <li><i class="fas fa-tv"></i> IPTV 750+ HD</li>
-                            <li><i class="fas fa-headset"></i> 24×7 Support</li>
-                            <li><i class="fas fa-tools"></i> Free Installation</li>
-                        </ul>
-                    </div>
-                    <div class="card plan-card popular">
-                        <div class="popular-tag">IPTV Special ⭐</div>
-                        <div class="plan-speed">50 Mbps</div>
-                        <div class="plan-price"><span class="rupee">₹</span>450<span class="period">/-</span></div>
-                        <ul class="plan-perks">
-                            <li><i class="fas fa-infinity"></i> Unlimited Data</li>
-                            <li><i class="fas fa-tv"></i> IPTV 750+ HD</li>
-                            <li><i class="fas fa-headset"></i> 24×7 Support</li>
-                            <li><i class="fas fa-tools"></i> Free Installation</li>
-                        </ul>
-                    </div>
-                    <div class="card plan-card">
-                        <div class="popular-tag" style="background:#FF9E00">Best for Gaming</div>
-                        <div class="plan-speed">100 Mbps</div>
-                        <div class="plan-price"><span class="rupee">₹</span>650<span class="period">/-</span></div>
-                        <ul class="plan-perks">
-                            <li><i class="fas fa-infinity"></i> Unlimited Data</li>
-                            <li><i class="fas fa-tv"></i> IPTV 750+ HD</li>
-                            <li><i class="fas fa-headset"></i> 24×7 Support</li>
-                            <li><i class="fas fa-tools"></i> Free Installation</li>
-                        </ul>
-                    </div>
-                    <div class="card plan-card popular">
-                        <div class="popular-tag" style="background:#e11d48">All Rounder 🔥</div>
-                        <div class="plan-speed">150 Mbps</div>
-                        <div class="plan-price"><span class="rupee">₹</span>679<span class="period">/-</span></div>
-                        <ul class="plan-perks">
-                            <li><i class="fas fa-infinity"></i> Unlimited Data</li>
-                            <li><i class="fas fa-tv"></i> IPTV 750+ HD</li>
-                            <li><i class="fas fa-headset"></i> 24×7 Support</li>
-                            <li><i class="fas fa-tools"></i> Free Installation</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
+
 
         <!-- IPTV -->
         <div id="view-iptv" class="section-view" style="display:none">
