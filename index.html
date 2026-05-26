@@ -4,627 +4,790 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>S.S. Broadband Services - Har Pal, Har Ghar</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link
-        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Montserrat:wght@800;900&display=swap"
+    <title>S.S. Broadband Services | Har Pal, Har Ghar</title>
+    <meta name="description" content="S.S. Broadband Services - Fast, reliable fiber internet. Register today!">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap"
         rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
+
     <!-- Loading Screen -->
     <div class="loading-screen" id="loadingScreen">
         <div class="loading-content">
-            <div class="logo-spin">
-                <i class="fas fa-wifi"></i>
-            </div>
-            <h2>S.S. Broadband</h2>
-            <p>connecting the disconnected</p>
-        </div>
-    </div>
-
-    <!-- Main Container -->
-    <div class="container" id="mainContainer">
-        <!-- Header with Logo and Menu -->
-        <header class="header">
-            <div class="logo-container">
-                <div class="logo">
+            <div class="loading-logo-wrap">
+                <img src="logo.png" alt="S.S. Broadband" class="loading-logo"
+                    onerror="this.style.display='none';document.getElementById('loadingFallback').style.display='flex'">
+                <div id="loadingFallback" class="loading-fallback">
                     <i class="fas fa-wifi"></i>
                     <span>S.S. Broadband</span>
                 </div>
-                <div class="slogan">Har Pal, Har Ghar</div>
-                <div class="menu-toggle" id="menuToggle">
-                    <i class="fas fa-bars"></i>
-                </div>
             </div>
-        </header>
-
-        <!-- Side Menu -->
-        <div class="side-menu" id="sideMenu">
-            <div class="menu-header">
-                <h3>Menu</h3>
-                <i class="fas fa-times close-menu" id="closeMenu"></i>
+            <div class="loading-bar-track">
+                <div class="loading-bar-fill" id="loadingBarFill"></div>
             </div>
-            <div class="menu-items">
-                <div class="menu-item" onclick="showSection('iptv')">
-                    <i class="fas fa-tv"></i>
-                    <span>IPTV Plan</span>
-                </div>
-                <div class="menu-item" onclick="showSection('ott')">
-                    <i class="fas fa-film"></i>
-                    <span>OTT Plan</span>
-                </div>
-                <div class="menu-item" onclick="showSection('fix-billing')">
-                    <i class="fas fa-file-invoice-dollar"></i>
-                    <span>Fix Billing</span>
-                </div>
-                <div class="menu-item" onclick="showSection('ping-rate')">
-                    <i class="fas fa-network-wired"></i>
-                    <span>Ping Rate</span>
-                </div>
-                <div class="menu-item" onclick="showSection('sharing-rate')">
-                    <i class="fas fa-share-alt"></i>
-                    <span>Sharing Rate</span>
-                </div>
-                <div class="menu-item" onclick="showSection('payment')">
-                    <i class="fas fa-credit-card"></i>
-                    <span>Payment Method</span>
-                </div>
-            </div>
+            <p class="loading-text">Connecting you to the future...</p>
         </div>
-        <div class="menu-overlay" id="menuOverlay"></div>
-
-        <!-- Progress Bar -->
-        <div class="progress-container">
-            <div class="progress-bar" id="progressBar"></div>
-            <div class="progress-steps">
-                <div class="step active" data-step="1">1</div>
-                <div class="step" data-step="2">2</div>
-                <div class="step" data-step="3">3</div>
-                <div class="step" data-step="4">4</div>
-            </div>
-        </div>
-
-        <!-- Form Container -->
-        <div class="form-container" id="formContainer">
-            <!-- Step 1: Basic Details -->
-            <form class="form-step active" id="step1">
-                <h2 class="form-title"><i class="fas fa-user"></i> Customer Details</h2>
-
-                <div class="input-group">
-                    <label for="operatorName">
-                        <i class="fas fa-headset"></i> Operator Name
-                    </label>
-                    <input type="text" id="operatorName" required placeholder="Enter operator name">
-                </div>
-
-                <div class="input-group">
-                    <label for="customerName">
-                        <i class="fas fa-user-circle"></i> Customer Name
-                    </label>
-                    <input type="text" id="customerName" required placeholder="Enter customer full name">
-                </div>
-
-                <div class="input-group">
-                    <label for="phoneNumber">
-                        <i class="fas fa-phone"></i> Mobile Number
-                    </label>
-                    <input type="tel" id="phoneNumber" required placeholder="10-digit mobile number">
-                </div>
-
-                <div class="input-group">
-                    <label for="emailId">
-                        <i class="fas fa-envelope"></i> Email ID
-                    </label>
-                    <input type="email" id="emailId" required placeholder="example@gmail.com">
-                </div>
-
-                <button type="button" class="btn-next" onclick="nextStep(2)">
-                    Next <i class="fas fa-arrow-right"></i>
-                </button>
-            </form>
-
-            <!-- Step 2: Aadhar Details -->
-            <form class="form-step" id="step2">
-                <h2 class="form-title"><i class="fas fa-id-card"></i> Aadhar Details</h2>
-
-                <div class="input-group">
-                    <label for="aadharNumber">
-                        <i class="fas fa-id-card"></i> Aadhar Number
-                    </label>
-                    <input type="text" id="aadharNumber" required placeholder="12-digit Aadhar number">
-                </div>
-
-                <div class="input-group">
-                    <label for="dob">
-                        <i class="fas fa-birthday-cake"></i> Date of Birth
-                    </label>
-                    <input type="date" id="dob" required>
-                </div>
-
-                <div class="input-group">
-                    <label for="pincode">
-                        <i class="fas fa-map-marker-alt"></i> Pincode
-                    </label>
-                    <input type="text" id="pincode" required placeholder="6-digit pincode">
-                </div>
-
-                <div class="input-group">
-                    <label for="aadharPhoto">
-                        <i class="fas fa-camera"></i> Aadhar Card Front Photo
-                    </label>
-                    <div class="file-upload" onclick="document.getElementById('fileInput').click()">
-                        <i class="fas fa-cloud-upload-alt"></i>
-                        <span>Click to upload photo</span>
-                        <input type="file" id="fileInput" accept="image/*" hidden onchange="previewImage(event)">
-                    </div>
-                    <div id="imagePreview" class="image-preview"></div>
-                </div>
-
-                <div class="button-group">
-                    <button type="button" class="btn-prev" onclick="prevStep(1)">
-                        <i class="fas fa-arrow-left"></i> Previous
-                    </button>
-                    <button type="button" class="btn-next" onclick="nextStep(3)">
-                        Next <i class="fas fa-arrow-right"></i>
-                    </button>
-                </div>
-            </form>
-
-            <!-- Step 3: Plan Selection -->
-            <form class="form-step" id="step3">
-                <h2 class="form-title"><i class="fas fa-tachometer-alt"></i> Select Plan</h2>
-
-                <div class="plan-section">
-                    <h3><i class="fas fa-bolt"></i> Speed Plan</h3>
-                    <div class="plan-grid" id="speedPlans">
-                        <div class="plan-card" data-value="20" onclick="selectPlan('speed', this)">
-                            <div class="plan-icon"><i class="fas fa-wifi"></i></div>
-                            <h4>20 Mbps</h4>
-                            <p>Basic Plan</p>
-                        </div>
-                        <div class="plan-card" data-value="30" onclick="selectPlan('speed', this)">
-                            <div class="plan-icon"><i class="fas fa-wifi"></i></div>
-                            <h4>30 Mbps</h4>
-                            <p>Standard</p>
-                        </div>
-                        <div class="plan-card" data-value="40" onclick="selectPlan('speed', this)">
-                            <div class="plan-icon"><i class="fas fa-wifi"></i></div>
-                            <h4>40 Mbps</h4>
-                            <p>Fast</p>
-                        </div>
-                        <div class="plan-card" data-value="50" onclick="selectPlan('speed', this)">
-                            <div class="plan-icon"><i class="fas fa-wifi"></i></div>
-                            <h4>50 Mbps</h4>
-                            <p>Premium</p>
-                        </div>
-                        <div class="plan-card" data-value="60" onclick="selectPlan('speed', this)">
-                            <div class="plan-icon"><i class="fas fa-wifi"></i></div>
-                            <h4>60 Mbps</h4>
-                            <p>Ultra</p>
-                        </div>
-                        <div class="plan-card" data-value="70" onclick="selectPlan('speed', this)">
-                            <div class="plan-icon"><i class="fas fa-wifi"></i></div>
-                            <h4>70 Mbps</h4>
-                            <p>Pro</p>
-                        </div>
-                        <div class="plan-card" data-value="100" onclick="selectPlan('speed', this)">
-                            <div class="plan-icon"><i class="fas fa-rocket"></i></div>
-                            <h4>100 Mbps</h4>
-                            <p>Ultimate</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="plan-section">
-                    <h3><i class="far fa-calendar-alt"></i> Validity Period</h3>
-                    <div class="plan-grid" id="validityPlans">
-                        <div class="plan-card" data-value="1" onclick="selectPlan('validity', this)">
-                            <div class="plan-icon"><i class="far fa-clock"></i></div>
-                            <h4>1 Month</h4>
-                            <p>Monthly</p>
-                        </div>
-                        <div class="plan-card" data-value="3" onclick="selectPlan('validity', this)">
-                            <div class="plan-icon"><i class="far fa-calendar"></i></div>
-                            <h4>3 Months</h4>
-                            <p>Quarterly</p>
-                        </div>
-                        <div class="plan-card" data-value="6" onclick="selectPlan('validity', this)">
-                            <div class="plan-icon"><i class="fas fa-calendar-alt"></i></div>
-                            <h4>6 Months</h4>
-                            <p>Half-Yearly</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="button-group">
-                    <button type="button" class="btn-prev" onclick="prevStep(2)">
-                        <i class="fas fa-arrow-left"></i> Previous
-                    </button>
-                    <button type="button" class="btn-next" onclick="nextStep(4)">
-                        Next <i class="fas fa-arrow-right"></i>
-                    </button>
-                </div>
-            </form>
-
-            <!-- Step 4: IPTV Selection -->
-            <form class="form-step" id="step4">
-                <h2 class="form-title"><i class="fas fa-tv"></i> IPTV Service</h2>
-
-                <div class="iptv-section">
-                    <h3><i class="fas fa-play-circle"></i> Select IPTV App</h3>
-                    <div class="iptv-options">
-                        <div class="iptv-card" data-app="none" onclick="selectIPTVApp('none')">
-                            <div class="iptv-icon"><i class="fas fa-times-circle"></i></div>
-                            <h4>None</h4>
-                            <p>No IPTV Required</p>
-                        </div>
-                        <div class="iptv-card" data-app="onyxplay" onclick="selectIPTVApp('onyxplay')">
-                            <div class="iptv-icon"><i class="fas fa-play"></i></div>
-                            <h4>OnyxPlay</h4>
-                            <p>Live TV & Movies</p>
-                        </div>
-                        <div class="iptv-card" data-app="ziggtv" onclick="selectIPTVApp('ziggtv')">
-                            <div class="iptv-icon"><i class="fas fa-tv"></i></div>
-                            <h4>Zigg TV</h4>
-                            <p>Entertainment</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="iptv-section" id="languageSection" style="display: none;">
-                    <h3><i class="fas fa-language"></i> Select Language (OnyxPlay)</h3>
-                    <div class="language-grid" id="languageOptions">
-                        <div class="lang-card" onclick="selectLanguage(this)">Hindi</div>
-                        <div class="lang-card" onclick="selectLanguage(this)">Marathi</div>
-                        <div class="lang-card" onclick="selectLanguage(this)">Bengali</div>
-                        <div class="lang-card" onclick="selectLanguage(this)">Gujarati</div>
-                        <div class="lang-card" onclick="selectLanguage(this)">Tamil</div>
-                    </div>
-                </div>
-
-                <div class="iptv-section" id="packageSection" style="display: none;">
-                    <h3><i class="fas fa-box"></i> Select Package (Zigg TV)</h3>
-                    <div class="package-grid" id="packageOptions">
-                        <div class="package-card" onclick="selectPackage(this)">Starter Plus</div>
-                        <div class="package-card" onclick="selectPackage(this)">Starter</div>
-                        <div class="package-card" onclick="selectPackage(this)">Silver HD</div>
-                        <div class="package-card" onclick="selectPackage(this)">Bronze HD</div>
-                        <div class="package-card" onclick="selectPackage(this)">Damaka Pack</div>
-                    </div>
-                </div>
-
-                <div class="button-group">
-                    <button type="button" class="btn-prev" onclick="prevStep(3)">
-                        <i class="fas fa-arrow-left"></i> Previous
-                    </button>
-                    <button type="button" class="btn-submit" onclick="submitForm()">
-                        <i class="fas fa-paper-plane"></i> Submit
-                    </button>
-                </div>
-            </form>
-        </div>
-
-        <!-- IPTV Packages Section -->
-        <div class="plans-section" id="iptvPackages" style="display: none;">
-            <div class="section-header">
-                <h2><i class="fas fa-tv"></i> IPTV Packages</h2>
-                <button class="btn-back" onclick="hideSection()"><i class="fas fa-arrow-left"></i> Back</button>
-            </div>
-            <div class="plans-grid">
-                <div class="plan-box" onclick="selectPackagePlan(this, 'Hindi IPTV', '200', '720+ Channels')">
-                    <div class="plan-badge">Most Popular</div>
-                    <h3>Hindi IPTV</h3>
-                    <div class="price">200</div>
-                    <div class="validity"><i class="fas fa-satellite-dish"></i> 720+ HD Channels</div>
-                    <ul>
-                        <li><i class="fas fa-check-circle"></i> News Channels</li>
-                        <li><i class="fas fa-check-circle"></i> Entertainment</li>
-                        <li><i class="fas fa-check-circle"></i> Movies</li>
-                        <li><i class="fas fa-check-circle"></i> Sports</li>
-                    </ul>
-                    <button class="btn-select">Select Plan <i class="fas fa-arrow-right"></i></button>
-                </div>
-
-                <div class="plan-box" onclick="selectPackagePlan(this, 'Bangali IPTV', '220', '720+ Channels')">
-                    <h3>Bangali IPTV</h3>
-                    <div class="price">220</div>
-                    <div class="validity"><i class="fas fa-satellite-dish"></i> 720+ HD Channels</div>
-                    <ul>
-                        <li><i class="fas fa-check-circle"></i> News Channels</li>
-                        <li><i class="fas fa-check-circle"></i> Entertainment</li>
-                        <li><i class="fas fa-check-circle"></i> Movies</li>
-                        <li><i class="fas fa-check-circle"></i> Sports</li>
-                    </ul>
-                    <button class="btn-select">Select Plan <i class="fas fa-arrow-right"></i></button>
-                </div>
-
-                <div class="plan-box" onclick="selectPackagePlan(this, 'Telegu IPTV', '220', '720+ Channels')">
-                    <h3>Telegu IPTV</h3>
-                    <div class="price">220</div>
-                    <div class="validity"><i class="fas fa-satellite-dish"></i> 720+ HD Channels</div>
-                    <ul>
-                        <li><i class="fas fa-check-circle"></i> News Channels</li>
-                        <li><i class="fas fa-check-circle"></i> Entertainment</li>
-                        <li><i class="fas fa-check-circle"></i> Movies</li>
-                        <li><i class="fas fa-check-circle"></i> Sports</li>
-                    </ul>
-                    <button class="btn-select">Select Plan <i class="fas fa-arrow-right"></i></button>
-                </div>
-
-                <div class="plan-box" onclick="selectPackagePlan(this, 'Marathi IPTV', '220', '720+ Channels')">
-                    <h3>Marathi IPTV</h3>
-                    <div class="price">220</div>
-                    <div class="validity"><i class="fas fa-satellite-dish"></i> 720+ HD Channels</div>
-                    <ul>
-                        <li><i class="fas fa-check-circle"></i> News Channels</li>
-                        <li><i class="fas fa-check-circle"></i> Entertainment</li>
-                        <li><i class="fas fa-check-circle"></i> Movies</li>
-                        <li><i class="fas fa-check-circle"></i> Sports</li>
-                    </ul>
-                    <button class="btn-select">Select Plan <i class="fas fa-arrow-right"></i></button>
-                </div>
-
-                <div class="plan-box" onclick="selectPackagePlan(this, 'Gujrati IPTV', '220', '720+ Channels')">
-                    <h3>Gujrati IPTV</h3>
-                    <div class="price">220</div>
-                    <div class="validity"><i class="fas fa-satellite-dish"></i> 720+ HD Channels</div>
-                    <ul>
-                        <li><i class="fas fa-check-circle"></i> News Channels</li>
-                        <li><i class="fas fa-check-circle"></i> Entertainment</li>
-                        <li><i class="fas fa-check-circle"></i> Movies</li>
-                        <li><i class="fas fa-check-circle"></i> Sports</li>
-                    </ul>
-                    <button class="btn-select">Select Plan <i class="fas fa-arrow-right"></i></button>
-                </div>
-            </div>
-        </div>
-
-        <!-- OTT Packages Section -->
-        <div class="plans-section" id="ottPackages" style="display: none;">
-            <div class="section-header">
-                <h2><i class="fas fa-film"></i> OTT Packages</h2>
-                <button class="btn-back" onclick="hideSection()"><i class="fas fa-arrow-left"></i> Back</button>
-            </div>
-            <div class="plans-grid">
-                <div class="plan-box mega-plan" onclick="selectPackagePlan(this, 'Mega OTT Pack', '199', '28 days')">
-                    <h3>Mega OTT Pack</h3>
-                    <div class="price">199</div>
-                    <div class="validity"><i class="far fa-clock"></i> 28 Days Validity</div>
-                    <div class="apps-list">
-                        <span>Discovery+</span> <span>Zee5</span> <span>Sony Liv</span>
-                        <span>Jio Hotstar</span> <span>Playflix</span> <span>Hub Hopper</span>
-                        <span>Runn</span> <span>Shemaro Me</span> <span>Shemaro Bhakti</span>
-                        <span>Stage</span> <span>Friday</span> <span>Chaupal</span>
-                        <span>Dangal TV</span> <span>Distro TV</span> <span>Fancode</span>
-                        <span>Bollywood Play</span>
-                    </div>
-                    <button class="btn-select">Select Plan <i class="fas fa-arrow-right"></i></button>
-                </div>
-
-                <div class="plan-box" onclick="selectPackagePlan(this, 'Entertainment Pack', '134', '28 days')">
-                    <h3>Entertainment Pack</h3>
-                    <div class="price">134</div>
-                    <div class="validity"><i class="far fa-clock"></i> 28 Days Validity</div>
-                    <div class="apps-list">
-                        <span>Discovery+</span> <span>Zee5</span> <span>Sony Liv</span>
-                        <span>Playflix</span>
-                    </div>
-                    <button class="btn-select">Select Plan <i class="fas fa-arrow-right"></i></button>
-                </div>
-
-                <div class="plan-box" onclick="selectPackagePlan(this, 'Premium Pack', '200', '28 days')">
-                    <h3>Premium Pack</h3>
-                    <div class="price">200</div>
-                    <div class="validity"><i class="far fa-clock"></i> 28 Days Validity</div>
-                    <div class="apps-list">
-                        <span>Zee5</span> <span>Sony Liv</span> <span>Jio Hotstar</span>
-                        <span>Playflix</span>
-                    </div>
-                    <button class="btn-select">Select Plan <i class="fas fa-arrow-right"></i></button>
-                </div>
-
-                <div class="plan-box" onclick="selectPackagePlan(this, 'Sports Pack', '155', '28 days')">
-                    <h3>Sports Pack</h3>
-                    <div class="price">155</div>
-                    <div class="validity"><i class="far fa-clock"></i> 28 Days Validity</div>
-                    <div class="apps-list">
-                        <span>Zee5</span> <span>Jio Hotstar</span> <span>Playflix</span>
-                        <span>Fancode</span>
-                    </div>
-                    <button class="btn-select">Select Plan <i class="fas fa-arrow-right"></i></button>
-                </div>
-
-                <div class="plan-box" onclick="selectPackagePlan(this, 'Value Pack', '120', '28 days')">
-                    <h3>Value Pack</h3>
-                    <div class="price">120</div>
-                    <div class="validity"><i class="far fa-clock"></i> 28 Days Validity</div>
-                    <div class="apps-list">
-                        <span>Sony Liv</span> <span>Zee5</span> <span>Fancode</span>
-                        <span>Playflix</span>
-                    </div>
-                    <button class="btn-select">Select Plan <i class="fas fa-arrow-right"></i></button>
-                </div>
-
-                <div class="plan-box mega-plan"
-                    onclick="selectPackagePlan(this, 'Ultimate Pack', 'Contact Us', 'Custom')">
-                    <h3>Ultimate Pack</h3>
-                    <div class="price">258</div>
-                    <div class="validity"><i class="far fa-clock"></i> 28 Days Validity</div>
-                    <div class="apps-list">
-                        <span>Amazon Prime</span> <span>Zee5</span> <span>Sony Liv</span>
-                        <span>Jio Hotstar</span> <span>Playflix</span> <span>OM TV</span>
-                        <span>Shemaro Bhakti</span> <span>Shemaro Gujrati</span> <span>Runn</span>
-                        <span>OTT Play Premium</span> <span>Hubhopper</span> <span>Chaupal</span>
-                        <span>Dangal Play</span> <span>Friday</span> <span>Bollywood Play</span>
-                        <span>Distro TV</span>
-                    </div>
-                    <button class="btn-select">Contact Us <i class="fas fa-phone-alt"></i></button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Fix Billing Section -->
-        <div class="plans-section" id="fixBillingSection" style="display: none;">
-            <div class="section-header">
-                <h2><i class="fas fa-file-invoice-dollar"></i> Fix Billing</h2>
-                <button class="btn-back" onclick="hideSection()"><i class="fas fa-arrow-left"></i> Back</button>
-            </div>
-            <div class="info-card">
-                <h3>Fix Billing Details</h3>
-                <p><strong>Rs. 85 +GST</strong> Per Month</p>
-                <p><strong>OTC Payment =</strong> Rs. 5,900 (Compulsory)</p>
-                <p>One month advance according to your bandwidth</p>
-            </div>
-        </div>
-
-        <!-- Ping Rate Section -->
-        <div class="plans-section" id="pingRateSection" style="display: none;">
-            <div class="section-header">
-                <h2><i class="fas fa-network-wired"></i> Ping Rate</h2>
-                <button class="btn-back" onclick="hideSection()"><i class="fas fa-arrow-left"></i> Back</button>
-            </div>
-            <div class="info-card">
-                <h3>Ping Rate Details</h3>
-                <p><strong>Rs. 145</strong> upto 50 MBps</p>
-                <p><strong>Rs. 190</strong> upto 60 MBps to 100 MBps</p>
-                <p><em>Condition-</em> operator have to add minimum 60 users in one month</p>
-                <p><strong>OTC-</strong> Rs. 5,900</p>
-            </div>
-        </div>
-
-        <!-- Sharing Rate Section -->
-        <div class="plans-section" id="sharingRateSection" style="display: none;">
-            <div class="section-header">
-                <h2><i class="fas fa-share-alt"></i> Sharing Rate</h2>
-                <button class="btn-back" onclick="hideSection()"><i class="fas fa-arrow-left"></i> Back</button>
-            </div>
-            <div class="info-card" style="margin-bottom: 30px; border-color: #0066FF;">
-                <h3><i class="fas fa-info-circle" style="color: #0066FF;"></i> Important Note</h3>
-                <p><strong>All Plans Will Be In 50-50 Sharing Ratio<strong></p>
-            </div>
-            <div class="plans-grid">
-                <div class="plan-box">
-                    <div class="plan-badge">Popular</div>
-                    <h3>30 MBps</h3>
-                    <div class="price">399</div>
-                    <div class="validity"><i class="far fa-calendar-alt"></i> 30 days validity</div>
-                    <ul>
-                        <li><i class="fas fa-balance-scale"></i> 50-50 Ratio</li>
-                    </ul>
-                </div>
-                <div class="plan-box">
-                    <h3>40 MBps</h3>
-                    <div class="price">420</div>
-                    <div class="validity"><i class="far fa-calendar-alt"></i> 30 days validity</div>
-                    <ul>
-                        <li><i class="fas fa-balance-scale"></i> 50-50 Ratio</li>
-                    </ul>
-                </div>
-                <div class="plan-box">
-                    <h3>50 MBps</h3>
-                    <div class="price">499</div>
-                    <div class="validity"><i class="far fa-calendar-alt"></i> 30 days validity</div>
-                    <ul>
-                        <li><i class="fas fa-balance-scale"></i> 50-50 Ratio</li>
-                    </ul>
-                </div>
-                <div class="plan-box">
-                    <h3>100 MBps</h3>
-                    <div class="price">538</div>
-                    <div class="validity"><i class="far fa-calendar-alt"></i> 30 days validity</div>
-                    <ul>
-                        <li><i class="fas fa-balance-scale"></i> 50-50 Ratio</li>
-                    </ul>
-                </div>
-                <div class="plan-box">
-                    <h3>150 MBps</h3>
-                    <div class="price">656</div>
-                    <div class="validity"><i class="far fa-calendar-alt"></i> 30 days validity</div>
-                    <ul>
-                        <li><i class="fas fa-balance-scale"></i> 50-50 Ratio</li>
-                    </ul>
-                </div>
-                <div class="plan-box">
-                    <h3>200 MBps</h3>
-                    <div class="price">1000</div>
-                    <div class="validity"><i class="far fa-calendar-alt"></i> 30 days validity</div>
-                    <ul>
-                        <li><i class="fas fa-balance-scale"></i> 50-50 Ratio</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-
-        <!-- Payment Method Section -->
-        <div class="payment-section" id="paymentMethod" style="display: none;">
-            <div class="section-header">
-                <h2><i class="fas fa-credit-card"></i> Payment Method</h2>
-                <button class="btn-back" onclick="hideSection()"><i class="fas fa-arrow-left"></i> Back</button>
-            </div>
-
-            <div class="payment-container">
-                <div class="qr-section">
-                    <h3>📱 Scan & Pay (GPay / Any UPI App)</h3>
-                    <div class="qr-code">
-                        <img src="qr.jpeg" alt="Payment QR Code">
-                    </div>
-                    <div class="upi-details">
-                        <p><i class="fas fa-mobile-alt"></i> UPI Number: <strong>9516688921</strong></p>
-                        <p><i class="fas fa-university"></i> UPI ID: <strong>9516688921@okhdfcbank</strong></p>
-                    </div>
-                    <div class="payment-note">
-                        <i class="fas fa-info-circle"></i>
-                        <div>
-                            <p>🙏 while making the payment, Write the reason in the discription:</p>
-                            <p><strong>"Broadband Payment - [आपका नाम] - [मोबाइल नंबर]"</strong></p>
-                            <p style="font-size: 0.9rem; margin-top: 10px;">Please write your name and mobile number in
-                                payment note.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="payment-instructions">
-                    <h4><i class="fas fa-list-ol"></i> Payment Instructions:</h4>
-                    <ol>
-                        <li>Open GPay / PhonePe / Any UPI App</li>
-                        <li>Scan QR code or enter UPI number: <strong>9516688921</strong></li>
-                        <li>Enter exact amount as per your selected plan</li>
-                        <li>In note, write: "Broadband Payment - YourName - MobileNumber"</li>
-                        <li>Complete payment and take screenshot</li>
-                        <li>Share screenshot on WhatsApp: <strong>9516688921</strong></li>
-                    </ol>
-
-                    <div class="contact-support">
-                        <p><i class="fas fa-headset"></i> Payment Support: 9516688921</p>
-                        <p><i class="fab fa-whatsapp"></i> WhatsApp: 8959334650</p>
-                        <p><i class="fas fa-clock"></i> Support Timings: 24/7</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Success Message -->
-        <div class="success-message" id="successMessage">
-            <div class="success-icon">
-                <i class="fas fa-check-circle"></i>
-            </div>
-            <h2>Successfully Submitted!</h2>
-            <p>Our technical team will contact you within 2 hours || Dhanyawad || </p>
-            <button class="btn-home" onclick="resetForm()">
-                <i class="fas fa-home"></i> New Form
-            </button>
-        </div>
-
-        <!-- Footer -->
-        <footer class="footer">
-            <p>© 2024 S.S. Broadband Services | Har Pal, Har Ghar</p>
-            <p>📞 Desk support: 9516688921</p>
-            <p>📞 Field support: 8959334650</p>
-            <p>📧 Mail: s.s.broadbandservices02@gmail.com</p>
-        </footer>
     </div>
+
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo" onclick="goHome(); return false;">
+                <img src="logo.png" alt="S.S. Broadband" class="logo-img"
+                    onerror="this.style.display='none';document.getElementById('logoFallback').style.display='flex'">
+                <span id="logoFallback" class="logo-fallback" style="display:none">
+                    <i class="fas fa-wifi"></i>
+                </span>
+                <div class="logo-text">
+                    <span class="brand">S.S. Broadband</span>
+                    <span class="tagline">Har Pal, Har Ghar</span>
+                </div>
+            </a>
+            <div class="menu-btn" id="menuBtn" onclick="toggleMenu()">
+                <div class="menu-line"></div>
+                <div class="menu-line"></div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Full-Screen Menu Overlay -->
+    <div class="menu-overlay" id="menuOverlay">
+        <button class="menu-close-btn" onclick="closeMenu()"><i class="fas fa-times"></i></button>
+        <div class="menu-content">
+            <a href="#" class="menu-link" onclick="showSection('iptv'); return false;"><i class="fas fa-tv"></i> IPTV
+                Plan</a>
+            <a href="#" class="menu-link" onclick="showSection('ott'); return false;"><i class="fas fa-film"></i> OTT
+                Plan</a>
+            <a href="#" class="menu-link" onclick="showSection('data'); return false;"><i class="fas fa-rocket"></i>
+                Data Plans</a>
+            <a href="#" class="menu-link" onclick="showSection('sharing-rate'); return false;"><i
+                    class="fas fa-share-alt"></i> Sharing Rate</a>
+            <a href="#" class="menu-link" onclick="showSection('fix-billing'); return false;"><i
+                    class="fas fa-file-invoice-dollar"></i> Fix Billing</a>
+            <a href="#" class="menu-link" onclick="showSection('ping-rate'); return false;"><i
+                    class="fas fa-network-wired"></i> Ping Rate</a>
+            <a href="#" class="menu-link" onclick="showSection('payment'); return false;"><i
+                    class="fas fa-credit-card"></i> Payment</a>
+            <div class="menu-support">
+                <p>Need help? Call us 24×7</p>
+                <a href="tel:9516688921" class="support-number">9516688921</a>
+                <a href="tel:8959334650" class="support-number secondary">8959334650</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================
+     MAIN CONTENT
+     ============================================================ -->
+    <div id="mainContent">
+
+        <!-- ===== HOME VIEW (Hero + Form only) ===== -->
+        <div id="homeView">
+
+            <!-- Hero -->
+            <header class="hero">
+                <div class="hero-inner">
+                    <span class="badge reveal-up delay-1"><i class="fas fa-broadcast-tower"></i> New Generation Fiber
+                        Network</span>
+                    <h1 class="hero-title reveal-up delay-2">Seamless.<br>Invisible.<br>Instant.</h1>
+                    <p class="hero-subtitle reveal-up delay-3">Experience internet so fast, you forget it's there.
+                        Register below for a free installation today.</p>
+                    <div class="hero-actions reveal-up delay-4">
+                        <button class="btn btn-primary" onclick="scrollToSection('booking')">Register Now <i
+                                class="fas fa-arrow-down"></i></button>
+                        <button class="btn btn-outline" onclick="toggleMenu()">View Plans <i
+                                class="fas fa-bars"></i></button>
+                    </div>
+                </div>
+                <div class="hero-graphic">
+                    <div class="floating-icon icon-1"><i class="fas fa-wifi"></i></div>
+                    <div class="floating-icon icon-2"><i class="fas fa-network-wired"></i></div>
+                    <div class="floating-icon icon-3"><i class="fas fa-server"></i></div>
+                    <div class="circle circle-1"></div>
+                    <div class="circle circle-2"></div>
+                </div>
+            </header>
+
+            <!-- Stats Bar -->
+            <section class="stats-section">
+                <div class="container">
+                    <div class="stats-grid reveal-up">
+                        <div class="stat-item">
+                            <div class="stat-number">5000+</div>
+                            <div class="stat-label">Happy Customers</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">99.9%</div>
+                            <div class="stat-label">Uptime</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">24/7</div>
+                            <div class="stat-label">Support</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">₹0</div>
+                            <div class="stat-label">Installation Charge</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Registration Form -->
+            <section class="booking section-padding" id="booking">
+                <div class="container">
+                    <div class="booking-header text-center reveal-up">
+                        <h2 class="section-title">New Connection Registration</h2>
+                        <p class="section-desc">Fill in your details below. Our team will contact you within 2 hours for
+                            free installation.</p>
+                    </div>
+                    <div class="booking-wrapper card reveal-up delay-2">
+                        <div class="booking-info">
+                            <img src="logo.png" alt="S.S. Broadband" class="form-logo"
+                                onerror="this.style.display='none';document.getElementById('formLogoFallback').style.display='flex'">
+                            <div id="formLogoFallback" class="form-logo-fallback" style="display:none">
+                                <i class="fas fa-wifi"></i>
+                            </div>
+                            <h2>Get Connected.</h2>
+                            <p>Register now and experience fiber internet with zero installation charges and 24×7
+                                support.</p>
+
+                            <div class="info-highlights">
+                                <div class="ih-item"><i class="fas fa-bolt"></i><span>Ultra-fast fiber speeds</span>
+                                </div>
+                                <div class="ih-item"><i class="fas fa-tools"></i><span>Free installation</span></div>
+                                <div class="ih-item"><i class="fas fa-headset"></i><span>24×7 customer support</span>
+                                </div>
+                                <div class="ih-item"><i class="fas fa-infinity"></i><span>Unlimited data</span></div>
+                            </div>
+
+                            <div class="contact-hint mt-4">
+                                <p><i class="fas fa-headset"></i> Support: <strong>8959334650</strong> /
+                                    <strong>9516688921</strong></p>
+                            </div>
+                        </div>
+
+                        <div class="booking-form-area">
+                            <!-- Step Progress -->
+                            <div class="form-progress">
+                                <div class="fp-step active" data-step="1">
+                                    <div class="fp-circle">1</div><span>Details</span>
+                                </div>
+                                <div class="fp-line"></div>
+                                <div class="fp-step" data-step="2">
+                                    <div class="fp-circle">2</div><span>Identity</span>
+                                </div>
+                                <div class="fp-line"></div>
+                                <div class="fp-step" data-step="3">
+                                    <div class="fp-circle">3</div><span>Plan</span>
+                                </div>
+                                <div class="fp-line"></div>
+                                <div class="fp-step" data-step="4">
+                                    <div class="fp-circle">4</div><span>IPTV</span>
+                                </div>
+                            </div>
+
+                            <!-- Step 1: Basic Details -->
+                            <div class="form-step active" id="fs1">
+                                <h3 class="step-title"><i class="fas fa-user"></i> Customer Details</h3>
+                                <div class="clean-form">
+                                    <div class="input-wrap">
+                                        <label for="operatorName"><i class="fas fa-headset"></i> Operator Name</label>
+                                        <input type="text" id="operatorName" placeholder="Enter operator name"
+                                            autocomplete="off">
+                                    </div>
+                                    <div class="input-wrap">
+                                        <label for="customerName"><i class="fas fa-user-circle"></i> Customer
+                                            Name</label>
+                                        <input type="text" id="customerName" placeholder="Enter customer full name"
+                                            autocomplete="off">
+                                    </div>
+                                    <div class="input-wrap">
+                                        <label for="phoneNumber"><i class="fas fa-phone"></i> Mobile Number</label>
+                                        <input type="tel" id="phoneNumber" placeholder="10-digit mobile number"
+                                            maxlength="10" autocomplete="off">
+                                    </div>
+                                    <div class="input-wrap">
+                                        <label for="emailId"><i class="fas fa-envelope"></i> Email ID</label>
+                                        <input type="email" id="emailId" placeholder="example@gmail.com"
+                                            autocomplete="off">
+                                    </div>
+                                    <button class="btn btn-primary btn-block" onclick="nextStep(2)">Next Step <i
+                                            class="fas fa-arrow-right"></i></button>
+                                </div>
+                            </div>
+
+                            <!-- Step 2: Aadhar Details -->
+                            <div class="form-step" id="fs2">
+                                <h3 class="step-title"><i class="fas fa-id-card"></i> Identity Verification</h3>
+                                <div class="clean-form">
+                                    <div class="input-wrap">
+                                        <label for="aadharNumber"><i class="fas fa-id-card"></i> Aadhar Number</label>
+                                        <input type="text" id="aadharNumber" placeholder="12-digit Aadhar number"
+                                            maxlength="12" autocomplete="off">
+                                    </div>
+                                    <div class="input-wrap">
+                                        <label for="dob"><i class="fas fa-birthday-cake"></i> Date of Birth</label>
+                                        <input type="date" id="dob">
+                                    </div>
+                                    <div class="input-wrap">
+                                        <label for="pincode"><i class="fas fa-map-marker-alt"></i> Pincode</label>
+                                        <input type="text" id="pincode" placeholder="6-digit pincode" maxlength="6"
+                                            autocomplete="off">
+                                    </div>
+                                    <div class="input-wrap">
+                                        <label><i class="fas fa-camera"></i> Aadhar Card Front Photo</label>
+                                        <div class="file-upload-area"
+                                            onclick="document.getElementById('fileInput').click()">
+                                            <i class="fas fa-cloud-upload-alt"></i>
+                                            <span>Click to upload photo</span>
+                                            <small>JPG, PNG – Max 5MB</small>
+                                            <input type="file" id="fileInput" accept="image/*" hidden
+                                                onchange="previewImage(event)">
+                                        </div>
+                                        <div id="imagePreview" class="img-preview-box"></div>
+                                    </div>
+                                    <div class="btn-row">
+                                        <button class="btn btn-ghost" onclick="prevStep(1)"><i
+                                                class="fas fa-arrow-left"></i> Back</button>
+                                        <button class="btn btn-primary" onclick="nextStep(3)">Next Step <i
+                                                class="fas fa-arrow-right"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Step 3: Plan Selection -->
+                            <div class="form-step" id="fs3">
+                                <h3 class="step-title"><i class="fas fa-tachometer-alt"></i> Select Plan</h3>
+                                <div class="clean-form">
+                                    <div class="mini-section">
+                                        <p class="mini-label"><i class="fas fa-bolt"></i> Speed</p>
+                                        <div class="chip-grid" id="speedChips">
+                                            <div class="chip" data-value="20 Mbps" onclick="selectChip('speed',this)">20
+                                                Mbps</div>
+                                            <div class="chip" data-value="30 Mbps" onclick="selectChip('speed',this)">30
+                                                Mbps</div>
+                                            <div class="chip" data-value="40 Mbps" onclick="selectChip('speed',this)">40
+                                                Mbps</div>
+                                            <div class="chip" data-value="50 Mbps" onclick="selectChip('speed',this)">50
+                                                Mbps</div>
+                                            <div class="chip" data-value="60 Mbps" onclick="selectChip('speed',this)">60
+                                                Mbps</div>
+                                            <div class="chip" data-value="70 Mbps" onclick="selectChip('speed',this)">70
+                                                Mbps</div>
+                                            <div class="chip" data-value="100 Mbps" onclick="selectChip('speed',this)">
+                                                100 Mbps</div>
+                                            <div class="chip" data-value="150 Mbps" onclick="selectChip('speed',this)">
+                                                150 Mbps</div>
+                                        </div>
+                                    </div>
+                                    <div class="mini-section">
+                                        <p class="mini-label"><i class="far fa-calendar-alt"></i> Validity</p>
+                                        <div class="chip-grid" id="validityChips">
+                                            <div class="chip" data-value="1 Month"
+                                                onclick="selectChip('validity',this)">1 Month</div>
+                                            <div class="chip" data-value="3 Months"
+                                                onclick="selectChip('validity',this)">3 Months</div>
+                                            <div class="chip" data-value="6 Months"
+                                                onclick="selectChip('validity',this)">6 Months</div>
+                                        </div>
+                                    </div>
+                                    <div class="btn-row">
+                                        <button class="btn btn-ghost" onclick="prevStep(2)"><i
+                                                class="fas fa-arrow-left"></i> Back</button>
+                                        <button class="btn btn-primary" onclick="nextStep(4)">Next Step <i
+                                                class="fas fa-arrow-right"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Step 4: IPTV -->
+                            <div class="form-step" id="fs4">
+                                <h3 class="step-title"><i class="fas fa-tv"></i> IPTV Service</h3>
+                                <div class="clean-form">
+                                    <div class="mini-section">
+                                        <p class="mini-label"><i class="fas fa-play-circle"></i> Select IPTV App</p>
+                                        <div class="iptv-choice-grid">
+                                            <div class="iptv-chip" data-app="none" onclick="selectIPTVApp('none',this)">
+                                                <i class="fas fa-times-circle"></i> None</div>
+                                            <div class="iptv-chip" data-app="onyxplay"
+                                                onclick="selectIPTVApp('onyxplay',this)"><i class="fas fa-play"></i>
+                                                OnyxPlay</div>
+                                            <div class="iptv-chip" data-app="ziggtv"
+                                                onclick="selectIPTVApp('ziggtv',this)"><i class="fas fa-tv"></i> Zigg TV
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="mini-section" id="langSection" style="display:none">
+                                        <p class="mini-label"><i class="fas fa-language"></i> Language (OnyxPlay)</p>
+                                        <div class="chip-grid" id="langChips">
+                                            <div class="chip" onclick="selectChip('lang',this)">Hindi</div>
+                                            <div class="chip" onclick="selectChip('lang',this)">Marathi</div>
+                                            <div class="chip" onclick="selectChip('lang',this)">Bengali</div>
+                                            <div class="chip" onclick="selectChip('lang',this)">Gujarati</div>
+                                            <div class="chip" onclick="selectChip('lang',this)">Tamil</div>
+                                        </div>
+                                    </div>
+                                    <div class="mini-section" id="pkgSection" style="display:none">
+                                        <p class="mini-label"><i class="fas fa-box"></i> Package (Zigg TV)</p>
+                                        <div class="chip-grid" id="pkgChips">
+                                            <div class="chip" onclick="selectChip('pkg',this)">Starter Plus</div>
+                                            <div class="chip" onclick="selectChip('pkg',this)">Starter</div>
+                                            <div class="chip" onclick="selectChip('pkg',this)">Silver HD</div>
+                                            <div class="chip" onclick="selectChip('pkg',this)">Bronze HD</div>
+                                            <div class="chip" onclick="selectChip('pkg',this)">Damaka Pack</div>
+                                        </div>
+                                    </div>
+                                    <div class="btn-row">
+                                        <button class="btn btn-ghost" onclick="prevStep(3)"><i
+                                                class="fas fa-arrow-left"></i> Back</button>
+                                        <button class="btn btn-primary" id="submitBtn" onclick="submitForm()"><i
+                                                class="fas fa-paper-plane"></i> Submit</button>
+                                    </div>
+                                    <div id="statusMessage" class="status-msg"></div>
+                                </div>
+                            </div>
+                        </div><!-- /.booking-form-area -->
+                    </div><!-- /.booking-wrapper -->
+                </div>
+            </section>
+
+        </div><!-- /#homeView -->
+
+        <!-- ===== SECTION VIEWS (Accessible via ☰ menu only) ===== -->
+
+        <!-- Data Plans -->
+        <div id="view-data" class="section-view" style="display:none">
+            <div class="container">
+                <div class="section-view-header">
+                    <button class="btn btn-ghost btn-back" onclick="goHome()"><i class="fas fa-arrow-left"></i>
+                        Back</button>
+                    <h2><i class="fas fa-rocket"></i> Data Plans</h2>
+                    <div></div>
+                </div>
+                <div class="grid plan-grid">
+                    <div class="card plan-card">
+                        <div class="popular-tag" style="background:#6E7485">Best for CCTV only</div>
+                        <div class="plan-speed">20 Mbps</div>
+                        <div class="plan-price"><span class="rupee">₹</span>180<span class="period">/-</span></div>
+                        <ul class="plan-perks">
+                            <li><i class="fas fa-infinity"></i> Unlimited Data</li>
+                            <li><i class="fas fa-headset"></i> 24×7 Support</li>
+                            <li><i class="fas fa-tools"></i> Free Installation</li>
+                        </ul>
+                    </div>
+                    <div class="card plan-card">
+                        <div class="popular-tag" style="background:#059669">Social Media</div>
+                        <div class="plan-speed">40 Mbps</div>
+                        <div class="plan-price"><span class="rupee">₹</span>440<span class="period">/-</span></div>
+                        <ul class="plan-perks">
+                            <li><i class="fas fa-infinity"></i> Unlimited Data</li>
+                            <li><i class="fas fa-tv"></i> IPTV 750+ HD</li>
+                            <li><i class="fas fa-headset"></i> 24×7 Support</li>
+                            <li><i class="fas fa-tools"></i> Free Installation</li>
+                        </ul>
+                    </div>
+                    <div class="card plan-card popular">
+                        <div class="popular-tag">IPTV Special ⭐</div>
+                        <div class="plan-speed">50 Mbps</div>
+                        <div class="plan-price"><span class="rupee">₹</span>450<span class="period">/-</span></div>
+                        <ul class="plan-perks">
+                            <li><i class="fas fa-infinity"></i> Unlimited Data</li>
+                            <li><i class="fas fa-tv"></i> IPTV 750+ HD</li>
+                            <li><i class="fas fa-headset"></i> 24×7 Support</li>
+                            <li><i class="fas fa-tools"></i> Free Installation</li>
+                        </ul>
+                    </div>
+                    <div class="card plan-card">
+                        <div class="popular-tag" style="background:#FF9E00">Best for Gaming</div>
+                        <div class="plan-speed">100 Mbps</div>
+                        <div class="plan-price"><span class="rupee">₹</span>650<span class="period">/-</span></div>
+                        <ul class="plan-perks">
+                            <li><i class="fas fa-infinity"></i> Unlimited Data</li>
+                            <li><i class="fas fa-tv"></i> IPTV 750+ HD</li>
+                            <li><i class="fas fa-headset"></i> 24×7 Support</li>
+                            <li><i class="fas fa-tools"></i> Free Installation</li>
+                        </ul>
+                    </div>
+                    <div class="card plan-card popular">
+                        <div class="popular-tag" style="background:#e11d48">All Rounder 🔥</div>
+                        <div class="plan-speed">150 Mbps</div>
+                        <div class="plan-price"><span class="rupee">₹</span>679<span class="period">/-</span></div>
+                        <ul class="plan-perks">
+                            <li><i class="fas fa-infinity"></i> Unlimited Data</li>
+                            <li><i class="fas fa-tv"></i> IPTV 750+ HD</li>
+                            <li><i class="fas fa-headset"></i> 24×7 Support</li>
+                            <li><i class="fas fa-tools"></i> Free Installation</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- IPTV -->
+        <div id="view-iptv" class="section-view" style="display:none">
+            <div class="container">
+                <div class="section-view-header">
+                    <button class="btn btn-ghost btn-back" onclick="goHome()"><i class="fas fa-arrow-left"></i>
+                        Back</button>
+                    <h2><i class="fas fa-tv"></i> IPTV Packages</h2>
+                    <div></div>
+                </div>
+                <div class="grid plan-grid">
+                    <div class="card plan-card popular">
+                        <div class="popular-tag">Most Popular</div>
+                        <div class="plan-speed">Hindi IPTV</div>
+                        <div class="plan-price"><span class="rupee">₹</span>200<span class="period">/-</span></div>
+                        <div class="validity-badge"><i class="fas fa-satellite-dish"></i> 720+ HD Channels</div>
+                        <ul class="plan-perks">
+                            <li><i class="fas fa-check-circle"></i> News Channels</li>
+                            <li><i class="fas fa-check-circle"></i> Entertainment</li>
+                            <li><i class="fas fa-check-circle"></i> Movies</li>
+                            <li><i class="fas fa-check-circle"></i> Sports</li>
+                        </ul>
+                    </div>
+                    <div class="card plan-card">
+                        <div class="plan-speed">Bengali IPTV</div>
+                        <div class="plan-price"><span class="rupee">₹</span>220<span class="period">/-</span></div>
+                        <div class="validity-badge"><i class="fas fa-satellite-dish"></i> 720+ HD Channels</div>
+                        <ul class="plan-perks">
+                            <li><i class="fas fa-check-circle"></i> News Channels</li>
+                            <li><i class="fas fa-check-circle"></i> Entertainment</li>
+                            <li><i class="fas fa-check-circle"></i> Movies</li>
+                            <li><i class="fas fa-check-circle"></i> Sports</li>
+                        </ul>
+                    </div>
+                    <div class="card plan-card">
+                        <div class="plan-speed">Telugu IPTV</div>
+                        <div class="plan-price"><span class="rupee">₹</span>220<span class="period">/-</span></div>
+                        <div class="validity-badge"><i class="fas fa-satellite-dish"></i> 720+ HD Channels</div>
+                        <ul class="plan-perks">
+                            <li><i class="fas fa-check-circle"></i> News Channels</li>
+                            <li><i class="fas fa-check-circle"></i> Entertainment</li>
+                            <li><i class="fas fa-check-circle"></i> Movies</li>
+                            <li><i class="fas fa-check-circle"></i> Sports</li>
+                        </ul>
+                    </div>
+                    <div class="card plan-card">
+                        <div class="plan-speed">Marathi IPTV</div>
+                        <div class="plan-price"><span class="rupee">₹</span>220<span class="period">/-</span></div>
+                        <div class="validity-badge"><i class="fas fa-satellite-dish"></i> 720+ HD Channels</div>
+                        <ul class="plan-perks">
+                            <li><i class="fas fa-check-circle"></i> News Channels</li>
+                            <li><i class="fas fa-check-circle"></i> Entertainment</li>
+                            <li><i class="fas fa-check-circle"></i> Movies</li>
+                            <li><i class="fas fa-check-circle"></i> Sports</li>
+                        </ul>
+                    </div>
+                    <div class="card plan-card">
+                        <div class="plan-speed">Gujarati IPTV</div>
+                        <div class="plan-price"><span class="rupee">₹</span>220<span class="period">/-</span></div>
+                        <div class="validity-badge"><i class="fas fa-satellite-dish"></i> 720+ HD Channels</div>
+                        <ul class="plan-perks">
+                            <li><i class="fas fa-check-circle"></i> News Channels</li>
+                            <li><i class="fas fa-check-circle"></i> Entertainment</li>
+                            <li><i class="fas fa-check-circle"></i> Movies</li>
+                            <li><i class="fas fa-check-circle"></i> Sports</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- OTT -->
+        <div id="view-ott" class="section-view" style="display:none">
+            <div class="container">
+                <div class="section-view-header">
+                    <button class="btn btn-ghost btn-back" onclick="goHome()"><i class="fas fa-arrow-left"></i>
+                        Back</button>
+                    <h2><i class="fas fa-film"></i> OTT Packages</h2>
+                    <div></div>
+                </div>
+                <div class="grid plan-grid ott-grid">
+                    <div class="card plan-card">
+                        <div class="popular-tag" style="background:#6E7485">Value Pack</div>
+                        <div class="plan-speed">4 Apps</div>
+                        <div class="plan-price"><span class="rupee">₹</span>120<span class="period">/-</span></div>
+                        <div class="plan-validity"><i class="far fa-clock"></i> 28 Days</div>
+                        <ul class="plan-perks apps-list">
+                            <li><i class="fas fa-play-circle"></i> Sony Liv</li>
+                            <li><i class="fas fa-play-circle"></i> Zee5</li>
+                            <li><i class="fas fa-play-circle"></i> Fancode</li>
+                            <li><i class="fas fa-play-circle"></i> Playflix</li>
+                        </ul>
+                    </div>
+                    <div class="card plan-card">
+                        <div class="popular-tag" style="background:#059669">Entertainment Pack</div>
+                        <div class="plan-speed">4 Top Apps</div>
+                        <div class="plan-price"><span class="rupee">₹</span>134<span class="period">/-</span></div>
+                        <div class="plan-validity"><i class="far fa-clock"></i> 28 Days</div>
+                        <ul class="plan-perks apps-list">
+                            <li><i class="fas fa-play-circle"></i> Discovery+</li>
+                            <li><i class="fas fa-play-circle"></i> Zee5</li>
+                            <li><i class="fas fa-play-circle"></i> Sony Liv</li>
+                            <li><i class="fas fa-play-circle"></i> Playflix</li>
+                        </ul>
+                    </div>
+                    <div class="card plan-card">
+                        <div class="popular-tag" style="background:#6366f1">Silver Pack</div>
+                        <div class="plan-speed">4 Apps</div>
+                        <div class="plan-price"><span class="rupee">₹</span>155<span class="period">/-</span></div>
+                        <div class="plan-validity"><i class="far fa-clock"></i> 28 Days</div>
+                        <ul class="plan-perks apps-list">
+                            <li><i class="fas fa-play-circle"></i> Zee5</li>
+                            <li><i class="fas fa-play-circle"></i> Jio Hotstar</li>
+                            <li><i class="fas fa-play-circle"></i> Playflix</li>
+                            <li><i class="fas fa-play-circle"></i> Fancode</li>
+                        </ul>
+                    </div>
+                    <div class="card plan-card popular">
+                        <div class="popular-tag">Premium Pack ⭐</div>
+                        <div class="plan-speed">4 Elite Apps</div>
+                        <div class="plan-price"><span class="rupee">₹</span>200<span class="period">/-</span></div>
+                        <div class="plan-validity"><i class="far fa-clock"></i> 28 Days</div>
+                        <ul class="plan-perks apps-list">
+                            <li><i class="fas fa-play-circle"></i> Zee5</li>
+                            <li><i class="fas fa-play-circle"></i> Sony Liv</li>
+                            <li><i class="fas fa-play-circle"></i> Jio Hotstar</li>
+                            <li><i class="fas fa-play-circle"></i> Playflix</li>
+                        </ul>
+                    </div>
+                    <div class="card plan-card popular">
+                        <div class="popular-tag" style="background:#e11d48">Mega OTT 🔥</div>
+                        <div class="plan-speed">16 Apps</div>
+                        <div class="plan-price"><span class="rupee">₹</span>199<span class="period">/-</span></div>
+                        <div class="plan-validity"><i class="far fa-clock"></i> 28 Days</div>
+                        <div class="apps-list-wrap"><span>Discovery+</span><span>Zee5</span><span>Sony
+                                Liv</span><span>Jio Hotstar</span><span>Playflix</span><span>Hub
+                                Hopper</span><span>Runn</span><span>Shemaro Me</span><span>Shemaro
+                                Bhakti</span><span>Stage</span><span>Friday</span><span>Chaupal</span><span>Dangal
+                                TV</span><span>Distro TV</span><span>Fancode</span><span>Bollywood Play</span></div>
+                    </div>
+                    <div class="card plan-card popular">
+                        <div class="popular-tag" style="background:#0f172a">Ultimate Pack 👑</div>
+                        <div class="plan-speed">16 Premium Apps</div>
+                        <div class="plan-price"><span class="rupee">₹</span>258<span class="period">/-</span></div>
+                        <div class="plan-validity"><i class="far fa-clock"></i> 28 Days</div>
+                        <div class="apps-list-wrap"><span>Amazon Prime</span><span>Zee5</span><span>Sony
+                                Liv</span><span>Jio Hotstar</span><span>Playflix</span><span>OM TV</span><span>Shemaro
+                                Bhakti</span><span>Shemaro Gujrati</span><span>Runn</span><span>OTT Play
+                                Premium</span><span>Hubhopper</span><span>Chaupal</span><span>Dangal
+                                Play</span><span>Friday</span><span>Bollywood Play</span><span>Distro TV</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Fix Billing -->
+        <div id="view-fix-billing" class="section-view" style="display:none">
+            <div class="container">
+                <div class="section-view-header">
+                    <button class="btn btn-ghost btn-back" onclick="goHome()"><i class="fas fa-arrow-left"></i>
+                        Back</button>
+                    <h2><i class="fas fa-file-invoice-dollar"></i> Fix Billing</h2>
+                    <div></div>
+                </div>
+                <div class="info-card-modern card">
+                    <div class="info-icon"><i class="fas fa-file-invoice-dollar"></i></div>
+                    <h3>Fix Billing Details</h3>
+                    <div class="info-rows">
+                        <div class="info-row"><span class="ir-label">Monthly Charge</span><span class="ir-value">₹85 +
+                                GST / Month</span></div>
+                        <div class="info-row"><span class="ir-label">OTC Payment</span><span
+                                class="ir-value highlighted">₹5,900 (Compulsory)</span></div>
+                        <div class="info-row"><span class="ir-label">Advance Bill</span><span class="ir-value">1 Month
+                                advance per bandwidth</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Ping Rate -->
+        <div id="view-ping-rate" class="section-view" style="display:none">
+            <div class="container">
+                <div class="section-view-header">
+                    <button class="btn btn-ghost btn-back" onclick="goHome()"><i class="fas fa-arrow-left"></i>
+                        Back</button>
+                    <h2><i class="fas fa-network-wired"></i> Ping Rate</h2>
+                    <div></div>
+                </div>
+                <div class="info-card-modern card">
+                    <div class="info-icon" style="background:rgba(99,102,241,0.1);color:#6366f1"><i
+                            class="fas fa-network-wired"></i></div>
+                    <h3>Ping Rate Details</h3>
+                    <div class="info-rows">
+                        <div class="info-row"><span class="ir-label">Up to 50 Mbps</span><span
+                                class="ir-value">₹145</span></div>
+                        <div class="info-row"><span class="ir-label">60 Mbps – 100 Mbps</span><span
+                                class="ir-value">₹190</span></div>
+                        <div class="info-row"><span class="ir-label">OTC Charge</span><span
+                                class="ir-value highlighted">₹5,900</span></div>
+                        <div class="info-row condition-row"><span class="ir-label">Condition</span><span
+                                class="ir-value">Min. 60 users to be added in one month</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sharing Rate -->
+        <div id="view-sharing-rate" class="section-view" style="display:none">
+            <div class="container">
+                <div class="section-view-header">
+                    <button class="btn btn-ghost btn-back" onclick="goHome()"><i class="fas fa-arrow-left"></i>
+                        Back</button>
+                    <h2><i class="fas fa-share-alt"></i> Sharing Rate</h2>
+                    <div></div>
+                </div>
+                <div class="sharing-note card"><i class="fas fa-info-circle"></i><span>All Plans are in <strong>50–50
+                            Sharing Ratio</strong></span></div>
+                <div class="grid plan-grid" style="margin-top:30px">
+                    <div class="card plan-card popular">
+                        <div class="popular-tag">Popular</div>
+                        <div class="plan-speed">30 Mbps</div>
+                        <div class="plan-price"><span class="rupee">₹</span>399<span class="period">/-</span></div>
+                        <div class="plan-validity"><i class="far fa-calendar-alt"></i> 30 Days</div>
+                        <ul class="plan-perks">
+                            <li><i class="fas fa-balance-scale"></i> 50–50 Ratio</li>
+                        </ul>
+                    </div>
+                    <div class="card plan-card">
+                        <div class="plan-speed">40 Mbps</div>
+                        <div class="plan-price"><span class="rupee">₹</span>420<span class="period">/-</span></div>
+                        <div class="plan-validity"><i class="far fa-calendar-alt"></i> 30 Days</div>
+                        <ul class="plan-perks">
+                            <li><i class="fas fa-balance-scale"></i> 50–50 Ratio</li>
+                        </ul>
+                    </div>
+                    <div class="card plan-card">
+                        <div class="plan-speed">50 Mbps</div>
+                        <div class="plan-price"><span class="rupee">₹</span>499<span class="period">/-</span></div>
+                        <div class="plan-validity"><i class="far fa-calendar-alt"></i> 30 Days</div>
+                        <ul class="plan-perks">
+                            <li><i class="fas fa-balance-scale"></i> 50–50 Ratio</li>
+                        </ul>
+                    </div>
+                    <div class="card plan-card">
+                        <div class="plan-speed">100 Mbps</div>
+                        <div class="plan-price"><span class="rupee">₹</span>538<span class="period">/-</span></div>
+                        <div class="plan-validity"><i class="far fa-calendar-alt"></i> 30 Days</div>
+                        <ul class="plan-perks">
+                            <li><i class="fas fa-balance-scale"></i> 50–50 Ratio</li>
+                        </ul>
+                    </div>
+                    <div class="card plan-card">
+                        <div class="plan-speed">150 Mbps</div>
+                        <div class="plan-price"><span class="rupee">₹</span>656<span class="period">/-</span></div>
+                        <div class="plan-validity"><i class="far fa-calendar-alt"></i> 30 Days</div>
+                        <ul class="plan-perks">
+                            <li><i class="fas fa-balance-scale"></i> 50–50 Ratio</li>
+                        </ul>
+                    </div>
+                    <div class="card plan-card">
+                        <div class="plan-speed">200 Mbps</div>
+                        <div class="plan-price"><span class="rupee">₹</span>1000<span class="period">/-</span></div>
+                        <div class="plan-validity"><i class="far fa-calendar-alt"></i> 30 Days</div>
+                        <ul class="plan-perks">
+                            <li><i class="fas fa-balance-scale"></i> 50–50 Ratio</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Payment -->
+        <div id="view-payment" class="section-view" style="display:none">
+            <div class="container">
+                <div class="section-view-header">
+                    <button class="btn btn-ghost btn-back" onclick="goHome()"><i class="fas fa-arrow-left"></i>
+                        Back</button>
+                    <h2><i class="fas fa-credit-card"></i> Payment Method</h2>
+                    <div></div>
+                </div>
+                <div class="payment-grid">
+                    <div class="card payment-qr-card">
+                        <h3><i class="fas fa-qrcode"></i> Scan &amp; Pay</h3>
+                        <p class="pay-subtitle">GPay / PhonePe / Any UPI App</p>
+                        <div class="qr-wrapper"><img src="qr.jpeg" alt="UPI QR Code"></div>
+                        <div class="upi-info-box">
+                            <div class="upi-row"><i class="fas fa-mobile-alt"></i><span>UPI Number:
+                                    <strong>9516688921</strong></span></div>
+                            <div class="upi-row"><i class="fas fa-university"></i><span>UPI ID:
+                                    <strong>9516688921@okhdfcbank</strong></span></div>
+                        </div>
+                        <div class="payment-note-box">
+                            <i class="fas fa-info-circle"></i>
+                            <div>
+                                <p>Write in payment description:</p>
+                                <p><strong>"Broadband Payment - [Name] - [Mobile No.]"</strong></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card payment-instructions-card">
+                        <h4><i class="fas fa-list-ol"></i> Payment Steps</h4>
+                        <ol class="pay-steps">
+                            <li>Open GPay / PhonePe / Any UPI App</li>
+                            <li>Scan QR or enter UPI: <strong>9516688921</strong></li>
+                            <li>Enter your plan amount exactly</li>
+                            <li>Note: "Broadband Payment - Name - Mobile"</li>
+                            <li>Complete payment &amp; take screenshot</li>
+                            <li>Share screenshot on WhatsApp: <strong>9516688921</strong></li>
+                        </ol>
+                        <div class="pay-support-box">
+                            <div class="psr"><i class="fas fa-headset"></i><span>Support:
+                                    <strong>9516688921</strong></span></div>
+                            <div class="psr"><i class="fab fa-whatsapp"></i><span>WhatsApp:
+                                    <strong>8959334650</strong></span></div>
+                            <div class="psr"><i class="fas fa-clock"></i><span>Timing: <strong>24/7</strong></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Success -->
+        <div id="successView" class="section-view" style="display:none">
+            <div class="container">
+                <div class="success-card card">
+                    <div class="success-animation">
+                        <div class="success-circle"><i class="fas fa-check"></i></div>
+                    </div>
+                    <h2>Successfully Submitted!</h2>
+                    <p>Our technical team will contact you within 2 hours for free installation.</p>
+                    <p class="success-dhanyawad">|| Dhanyawad 🙏 ||</p>
+                    <button class="btn btn-primary" onclick="goHome()"><i class="fas fa-home"></i> Back to Home</button>
+                </div>
+            </div>
+        </div>
+
+    </div><!-- /#mainContent -->
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-top">
+                <div class="footer-brand">
+                    <img src="logo.png" alt="S.S. Broadband" class="footer-logo"
+                        onerror="this.onerror=null;this.style.display='none'">
+                    <span>S.S. Broadband Services</span>
+                </div>
+                <div class="footer-contact">
+                    <a href="mailto:s.s.broadbandservices02@gmail.com"><i class="fas fa-envelope"></i>
+                        s.s.broadbandservices02@gmail.com</a>
+                    <a href="tel:9516688921"><i class="fas fa-phone-alt"></i> 9516688921</a>
+                    <a href="tel:8959334650"><i class="fas fa-phone-alt"></i> 8959334650</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2024 S.S. Broadband Services | Har Pal, Har Ghar</p>
+                <div class="developer-credit">Website by <span class="dev-name">Harsh_Labs</span></div>
+            </div>
+        </div>
+    </footer>
 
     <script src="script.js"></script>
 </body>
