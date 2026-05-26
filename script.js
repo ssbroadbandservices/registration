@@ -37,25 +37,137 @@ let currentStep = 1;
 // ─── DOMContentLoaded ─────────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', function () {
 
-    // Animated loading bar
-    let pct = 0;
-    const fill = document.getElementById('loadingBarFill');
-    const timer = setInterval(() => {
-        pct += Math.random() * 20 + 5;
-        if (pct >= 100) {
-            pct = 100;
-            clearInterval(timer);
-            setTimeout(() => {
-                const ls = document.getElementById('loadingScreen');
-                if (ls) {
-                    ls.style.opacity = '0';
-                    ls.style.transition = 'opacity 0.5s ease';
-                    setTimeout(() => ls.style.display = 'none', 500);
-                }
-            }, 300);
+    const loader = document.getElementById('loadingScreen');
+    const bar = document.getElementById('loadingBarFill');
+    const text = document.getElementById('loadingText');
+    const statuses = [
+        "Initializing Connection...",
+        "Connecting to Fiber Server...",
+        "Verifying Fiber Link...",
+        "Establishing Secure Gateway...",
+        "Optimizing Bandwidth...",
+        "Connected Successfully!"
+    ];
+
+    let progress = 0;
+    const duration = 4000; // 4 seconds
+    const intervalTime = 50;
+    const increment = (100 / (duration / intervalTime));
+
+    const interval = setInterval(() => {
+        progress += increment;
+        if (progress > 100) progress = 100;
+        if (bar) bar.style.width = progress + '%';
+
+        // Update percentage text
+        const percentEl = document.getElementById('loadPercent');
+        if (percentEl) {
+            percentEl.innerText = Math.round(progress) + '%';
         }
-        if (fill) fill.style.width = Math.min(pct, 100) + '%';
-    }, 100);
+
+        if (text) {
+            const statusIdx = Math.min(Math.floor((progress / 100) * statuses.length), statuses.length - 1);
+            text.innerText = statuses[statusIdx];
+        }
+
+        if (progress >= 100) {
+            clearInterval(interval);
+            // Seamless transition: Start welcome while loader is still visible
+            startWelcomeSequence();
+            setTimeout(() => {
+                if (loader) {
+                    loader.style.display = 'none';
+                }
+            }, 500);
+        }
+    }, intervalTime);
+
+    function startWelcomeSequence() {
+        const overlay = document.getElementById('welcomeOverlay');
+        const vStep = document.getElementById('verifyStep');
+        const nStep = document.getElementById('namasteStep');
+
+        if (!overlay) return;
+
+        overlay.style.display = 'flex';
+        overlay.style.opacity = '1';
+        setTimeout(() => overlay.classList.add('active'), 50);
+
+        // Stage 1: Verification (Stay for 1.8s)
+        setTimeout(() => {
+            vStep.classList.remove('active');
+            nStep.classList.add('active');
+            createNamasteParticles();
+            cycleGreetings();
+
+            // Stage 2: Namaste Sequence (Total 3.5s)
+            setTimeout(() => {
+                overlay.style.opacity = '0';
+                overlay.style.transition = 'opacity 1s cubic-bezier(0.16, 1, 0.3, 1)';
+                setTimeout(() => {
+                    overlay.style.display = 'none';
+                    document.body.style.overflow = 'auto';
+                    revealContent();
+                }, 1000);
+            }, 3500);
+
+        }, 1800);
+    }
+
+    function cycleGreetings() {
+        const greetings = [
+            { t: "नमस्ते" },
+            { t: "Hello" }
+        ];
+        const el = document.getElementById('greetingText');
+        if (!el) return;
+
+        let i = 0;
+        const interval = setInterval(() => {
+            i++;
+            if (i >= greetings.length) {
+                clearInterval(interval);
+                return;
+            }
+
+            // Premium Slow Transition (Fade + Slight Blur + Scale)
+            el.style.opacity = '0';
+            el.style.filter = 'blur(8px)';
+            el.style.transform = 'scale(0.95)';
+
+            setTimeout(() => {
+                el.innerText = greetings[i].t;
+                el.style.opacity = '1';
+                el.style.filter = 'blur(0)';
+                el.style.transform = 'scale(1)';
+            }, 500); // Slightly faster transition
+
+        }, 1500); // Stay for 1.5 seconds
+    }
+
+    function createNamasteParticles() {
+        const container = document.getElementById('namasteParticles');
+        if (!container) return;
+        for (let i = 0; i < 20; i++) {
+            const p = document.createElement('div');
+            p.className = 'particle';
+            const size = Math.random() * 6 + 2;
+            p.style.width = size + 'px';
+            p.style.height = size + 'px';
+            p.style.left = '50%';
+            p.style.top = '50%';
+            p.style.setProperty('--tx', (Math.random() - 0.5) * 300 + 'px');
+            p.style.setProperty('--ty', (Math.random() - 0.5) * 300 + 'px');
+            p.style.animationDelay = Math.random() * 2 + 's';
+            container.appendChild(p);
+        }
+    }
+
+    function revealContent() {
+        document.querySelectorAll('.reveal-up').forEach((el, index) => {
+            setTimeout(() => el.classList.add('active'), index * 100);
+        });
+    }
 
     // Set DOB max to today
     const dobEl = document.getElementById('dob');
@@ -64,8 +176,12 @@ document.addEventListener('DOMContentLoaded', function () {
     // Input masking
     initValidation();
 
-    // Navbar scroll effect
+    // Navbar scroll effect (Throttled for performance)
+    let lastScroll = 0;
     window.addEventListener('scroll', () => {
+        const now = Date.now();
+        if (now - lastScroll < 40) return; // ~25fps throttle
+        lastScroll = now;
         document.getElementById('navbar')?.classList.toggle('scrolled', window.scrollY > 50);
     });
 
@@ -134,7 +250,17 @@ function showSection(type) {
 
 function scrollToSection(id) {
     const el = document.getElementById(id);
-    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    if (!el) return;
+    const offset = 170; // Account for tall fixed navbar 
+    const bodyRect = document.body.getBoundingClientRect().top;
+    const elRect = el.getBoundingClientRect().top;
+    const elPos = elRect - bodyRect;
+    const offsetPos = elPos - offset;
+
+    window.scrollTo({
+        top: offsetPos,
+        behavior: 'smooth'
+    });
 }
 
 // ─── Multi-Step Form ──────────────────────────────────────────────────────
