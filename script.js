@@ -73,12 +73,14 @@ document.addEventListener('DOMContentLoaded', function () {
         if (progress >= 100) {
             clearInterval(interval);
             // Seamless transition: Start welcome while loader is still visible
-            startWelcomeSequence();
+            // Handover to Welcome Sequence (Cinematic Fade)
             setTimeout(() => {
-                if (loader) {
-                    loader.style.display = 'none';
-                }
-            }, 500);
+                loadingScreen.style.opacity = '0';
+                startWelcomeSequence(); // Overlay will start fading in while loading fades out
+                setTimeout(() => {
+                    loadingScreen.style.display = 'none';
+                }, 800);
+            }, 600);
         }
     }, intervalTime);
 
@@ -90,8 +92,10 @@ document.addEventListener('DOMContentLoaded', function () {
         if (!overlay) return;
 
         overlay.style.display = 'flex';
-        overlay.style.opacity = '1';
-        setTimeout(() => overlay.classList.add('active'), 50);
+        // Wait a tiny bit for display:flex to register before adding active class for opacity transition
+        requestAnimationFrame(() => {
+            overlay.classList.add('active');
+        });
 
         // Stage 1: Verification (Stay for 1.8s)
         setTimeout(() => {
@@ -163,13 +167,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    function revealContent() {
-        document.querySelectorAll('.reveal-up').forEach((el, index) => {
-            setTimeout(() => el.classList.add('active'), index * 100);
-        });
-    }
-
-    // Set DOB max to today
     const dobEl = document.getElementById('dob');
     if (dobEl) dobEl.max = new Date().toISOString().split('T')[0];
 
@@ -190,7 +187,7 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 // ─── Scroll Reveal ────────────────────────────────────────────────────────
-function initReveal() {
+function revealContent() {
     const els = document.querySelectorAll('.reveal-up');
     const obs = new IntersectionObserver((entries) => {
         entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('active'); });
@@ -541,3 +538,324 @@ function showToast(msg, type = 'info') {
         setTimeout(() => el.remove(), 400);
     }, dur);
 }
+
+/* =========================================================================
+   ORDER BANDWIDTH MODAL
+   ========================================================================= */
+
+// ─── State ────────────────────────────────────────────────────────────────
+const bwData = {
+    name: '',
+    phone: '',
+    email: '',
+    address: '',
+    locationText: '',
+    locationUrl: '',
+    bandwidth: ''
+};
+
+// ─── Open / Close ─────────────────────────────────────────────────────────
+function openBandwidthModal() {
+    const overlay = document.getElementById('bwModalOverlay');
+    if (!overlay) return;
+    overlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
+    // Focus first field
+    setTimeout(() => document.getElementById('bwName')?.focus(), 350);
+}
+
+function closeBandwidthModal() {
+    const overlay = document.getElementById('bwModalOverlay');
+    if (!overlay) return;
+    overlay.classList.remove('active');
+    document.body.style.overflow = '';
+}
+
+function closeBandwidthModalOutside(e) {
+    if (e.target === document.getElementById('bwModalOverlay')) {
+        closeBandwidthModal();
+    }
+}
+
+// Close on Escape key
+document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') closeBandwidthModal();
+});
+
+// ─── Bandwidth Chip Selection ──────────────────────────────────────────────
+function selectBwChip(el) {
+    document.querySelectorAll('#bwBandwidthChips .bw-chip').forEach(c => c.classList.remove('selected'));
+    el.classList.add('selected');
+    bwData.bandwidth = el.textContent.trim();
+
+    const customInput = document.getElementById('bwCustomMbps');
+    if (customInput) {
+        customInput.style.display = bwData.bandwidth === 'Custom' ? 'block' : 'none';
+        if (bwData.bandwidth === 'Custom') {
+            customInput.focus();
+            bwData.bandwidth = '';
+        }
+    }
+}
+
+// ─── Get Current GPS Location (3-stage fallback) ───────────────────────────
+function getBandwidthLocation() {
+    const btn = document.getElementById('bwLocBtn');
+    const input = document.getElementById('bwLocationText');
+
+    if (!navigator.geolocation) {
+        setLocStatus('error', '❌ Geolocation not supported by this browser.');
+        showManualLocationFallback('Your browser does not support GPS detection.');
+        return;
+    }
+
+    btn.disabled = true;
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Detecting…';
+    setLocStatus('loading', '📡 Requesting location permission…');
+    hideManualLocationFallback();
+
+    // Stage 1: High accuracy
+    navigator.geolocation.getCurrentPosition(
+        (pos) => onLocationSuccess(pos, btn, input),
+        (err) => {
+            // Stage 2: Low accuracy retry on timeout
+            if (err.code === err.TIMEOUT) {
+                setLocStatus('loading', '⏳ Retrying with lower accuracy…');
+                navigator.geolocation.getCurrentPosition(
+                    (pos) => onLocationSuccess(pos, btn, input),
+                    (err2) => onLocationError(err2, btn),
+                    { enableHighAccuracy: false, timeout: 12000, maximumAge: 30000 }
+                );
+            } else {
+                onLocationError(err, btn);
+            }
+        },
+        { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
+    );
+}
+
+function onLocationSuccess(pos, btn, input) {
+    const lat = pos.coords.latitude.toFixed(6);
+    const lng = pos.coords.longitude.toFixed(6);
+    const acc = Math.round(pos.coords.accuracy);
+    const mapsUrl = `https://www.google.com/maps?q=${lat},${lng}`;
+
+    bwData.locationText = `${lat}, ${lng}`;
+    bwData.locationUrl = mapsUrl;
+
+    if (input) input.value = `${lat}, ${lng}`;
+    setLocStatus('success', `✅ Location captured! Accuracy: ±${acc}m`);
+
+    // Hide manual fallback if it was shown
+    hideManualLocationFallback();
+
+    btn.disabled = false;
+    btn.innerHTML = '<i class="fas fa-check"></i> Got It!';
+    btn.style.background = 'linear-gradient(135deg,#10b981,#059669)';
+}
+
+function onLocationError(err, btn) {
+    btn.disabled = false;
+    btn.innerHTML = '<i class="fas fa-crosshairs"></i> Retry';
+    btn.style.background = '';
+
+    const hints = {
+        1: 'Location permission denied by browser/device.',
+        2: 'Location signal unavailable.',
+        3: 'Location request timed out.'
+    };
+    const hint = hints[err.code] || 'Location could not be determined.';
+    setLocStatus('error', `❌ ${hint}`);
+    showManualLocationFallback(hint);
+}
+
+function setLocStatus(type, msg) {
+    const el = document.getElementById('bwLocationStatus');
+    if (!el) return;
+    el.className = `bw-location-status ${type}`;
+    el.textContent = msg;
+}
+
+// ─── Manual Location Fallback ──────────────────────────────────────────────
+function showManualLocationFallback(reason) {
+    const box = document.getElementById('bwManualLocationBox');
+    if (box) {
+        box.style.display = 'block';
+        // Update hint text with actual reason
+        const span = box.querySelector('.bw-manual-hint span');
+        if (span) {
+            span.innerHTML = `<strong>Auto-detect failed</strong> (${reason})<br>
+Open <strong>Google Maps</strong> → press &amp; hold your location pin → tap <em>Share</em> → copy link → paste below.<br>
+Or just skip — your address field is enough.`;
+        }
+    }
+}
+
+function hideManualLocationFallback() {
+    const box = document.getElementById('bwManualLocationBox');
+    if (box) box.style.display = 'none';
+}
+
+function openGoogleMapsForUser() {
+    // Opens Google Maps — user can navigate to their location and share the link
+    window.open('https://maps.google.com', '_blank');
+}
+
+function handleManualLocationInput(el) {
+    const val = el.value.trim();
+    if (!val) {
+        bwData.locationUrl = '';
+        bwData.locationText = '';
+        return;
+    }
+    // Accept any google maps URL or coords
+    bwData.locationUrl = val;
+    bwData.locationText = 'Manual (see link)';
+    // Try to extract lat/lng from the URL for display
+    const coordMatch = val.match(/[-]?\d+\.\d+,\s*[-]?\d+\.\d+/);
+    if (coordMatch) {
+        bwData.locationText = coordMatch[0];
+        const locInput = document.getElementById('bwLocationText');
+        if (locInput) locInput.value = coordMatch[0];
+    } else {
+        const locInput = document.getElementById('bwLocationText');
+        if (locInput) locInput.value = 'Maps link pasted ✓';
+    }
+    setLocStatus('success', '✅ Location link saved.');
+}
+
+// ─── Validate & Submit ─────────────────────────────────────────────────────
+async function submitBandwidthOrder() {
+    // Collect values
+    bwData.name = (document.getElementById('bwName')?.value || '').trim();
+    bwData.phone = (document.getElementById('bwPhone')?.value || '').trim();
+    bwData.email = (document.getElementById('bwEmail')?.value || '').trim();
+    bwData.address = (document.getElementById('bwAddress')?.value || '').trim();
+
+    // Custom bandwidth input
+    const customInput = document.getElementById('bwCustomMbps');
+    if (customInput && customInput.style.display !== 'none' && customInput.value.trim()) {
+        bwData.bandwidth = customInput.value.trim();
+    }
+
+    // Validation
+    if (!bwData.name) { showToast('Please enter your full name', 'error'); return; }
+    if (!bwData.phone || bwData.phone.length !== 10) { showToast('Enter a valid 10-digit mobile number', 'error'); return; }
+    if (!bwData.email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(bwData.email)) { showToast('Enter a valid email address', 'error'); return; }
+    if (!bwData.address) { showToast('Please enter your full address', 'error'); return; }
+    if (!bwData.bandwidth) { showToast('Please select or enter required bandwidth', 'error'); return; }
+
+    const btn = document.getElementById('bwSubmitBtn');
+    const statusEl = document.getElementById('bwStatusMsg');
+    const originalHTML = btn ? btn.innerHTML : '';
+    if (btn) { btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Submitting...'; btn.disabled = true; }
+    if (statusEl) { statusEl.className = 'bw-status-msg'; statusEl.textContent = ''; }
+
+    try {
+        const ts = new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' });
+
+        // Build location line for message
+        const locationInfo = bwData.locationUrl
+            ? `${bwData.locationText} | Maps: ${bwData.locationUrl}`
+            : (bwData.locationText || 'Not provided');
+
+        // ─────────────────────────────────────────────────────────────────
+        // IMPORTANT: Use the EXACT same field names as the registration form
+        // so the Apps Script can read and forward to Telegram correctly.
+        // We repurpose fields with clear labels so the Telegram message
+        // is readable on the other end.
+        // ─────────────────────────────────────────────────────────────────
+        const payload = {
+            timestamp: ts,
+            // Mark this as a bandwidth order at the top
+            operatorName: '📶 BANDWIDTH ORDER',
+            customerName: bwData.name,
+            phoneNumber: bwData.phone,
+            emailId: bwData.email,
+            // Pack address + location into aadhar/dob fields (clear labels)
+            aadharNumber: 'ADDRESS: ' + bwData.address,
+            dob: 'LOCATION: ' + locationInfo,
+            pincode: 'N/A',
+            areaName: bwData.address,
+            // Plan fields carry bandwidth info
+            planSpeed: bwData.bandwidth,
+            planValidity: 'Bandwidth Order',
+            iptvApp: 'No IPTV',
+            iptvCategory: 'N/A',
+            imageData: ''
+        };
+
+        await fetch(_api._get(), {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        });
+
+        // ── Local backup ──────────────────────────────────────────────────
+        saveBackup({ ...payload, _type: 'bandwidth_order' });
+
+        // Success UI
+        if (statusEl) {
+            statusEl.className = 'bw-status-msg success';
+            statusEl.textContent = '✅ Order submitted! We will contact you shortly.';
+        }
+        showToast('Bandwidth order sent successfully!', 'success');
+
+        // Reset and close after 2.5s
+        setTimeout(() => {
+            resetBandwidthModal();
+            closeBandwidthModal();
+        }, 2500);
+
+    } catch (err) {
+        console.error('BW order error:', err);
+        if (statusEl) {
+            statusEl.className = 'bw-status-msg error';
+            statusEl.textContent = '⚠️ Network error. Please call us directly.';
+        }
+        showToast('Could not send. Please call us on 9516688921', 'error');
+    } finally {
+        if (btn) { btn.innerHTML = originalHTML; btn.disabled = false; }
+    }
+}
+
+
+// ─── Reset Bandwidth Modal ─────────────────────────────────────────────────
+function resetBandwidthModal() {
+    ['bwName', 'bwPhone', 'bwEmail', 'bwAddress', 'bwLocationText', 'bwCustomMbps', 'bwManualLocationUrl'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.value = '';
+    });
+
+    const customInput = document.getElementById('bwCustomMbps');
+    if (customInput) customInput.style.display = 'none';
+
+    hideManualLocationFallback();
+
+    document.querySelectorAll('#bwBandwidthChips .bw-chip').forEach(c => c.classList.remove('selected'));
+
+    const locBtn = document.getElementById('bwLocBtn');
+    if (locBtn) {
+        locBtn.disabled = false;
+        locBtn.innerHTML = '<i class="fas fa-crosshairs"></i> Auto Detect';
+        locBtn.style.background = '';
+    }
+
+    const status = document.getElementById('bwLocationStatus');
+    if (status) { status.className = 'bw-location-status'; status.textContent = ''; }
+
+    const statusMsg = document.getElementById('bwStatusMsg');
+    if (statusMsg) { statusMsg.className = 'bw-status-msg'; statusMsg.textContent = ''; }
+
+    // Reset state
+    Object.keys(bwData).forEach(k => bwData[k] = '');
+}
+
+// ─── Phone number validation for BW modal ─────────────────────────────────
+document.addEventListener('DOMContentLoaded', function () {
+    const bwPhone = document.getElementById('bwPhone');
+    if (bwPhone) bwPhone.addEventListener('input', function () {
+        this.value = this.value.replace(/\D/g, '').slice(0, 10);
+    });
+});
