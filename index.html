@@ -8,13 +8,20 @@
     <meta name="description" content="S.S. Broadband Services - Fast, reliable fiber internet. Register today!">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap"
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800;900&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
+    <!-- Premium Background Effects -->
+    <div class="mesh-bg"></div>
+    <div class="bg-ornaments">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+    </div>
+
 
     <!-- Loading Screen -->
     <div class="loading-screen" id="loadingScreen">
@@ -96,6 +103,7 @@
             <div class="menu-btn" id="menuBtn" onclick="toggleMenu()">
                 <div class="menu-line"></div>
                 <div class="menu-line"></div>
+                <div class="menu-line"></div>
             </div>
         </div>
     </nav>
@@ -115,6 +123,9 @@
                     class="fas fa-file-invoice-dollar"></i> Fix Billing</a>
             <a href="#" class="menu-link" onclick="showSection('ping-rate'); return false;"><i
                     class="fas fa-network-wired"></i> Ping Rate</a>
+            <a href="#" class="menu-link menu-link-highlight"
+                onclick="closeMenu(); openBandwidthModal(); return false;"><i class="fas fa-tachometer-alt"></i> Order
+                Bandwidth</a>
             <a href="#" class="menu-link" onclick="showSection('payment'); return false;"><i
                     class="fas fa-credit-card"></i> Payment</a>
             <div class="menu-support">
@@ -136,16 +147,27 @@
             <!-- Hero -->
             <header class="hero">
                 <div class="hero-inner">
-                    <span class="badge reveal-up delay-1"><i class="fas fa-broadcast-tower"></i> New Generation Fiber
-                        Network</span>
-                    <h1 class="hero-title reveal-up delay-2">Seamless.<br>Invisible.<br>Instant.</h1>
-                    <p class="hero-subtitle reveal-up delay-3">Experience internet so fast, you forget it's there.
-                        Register below for a free installation today.</p>
-                    <div class="hero-actions reveal-up delay-4">
-                        <button class="btn btn-primary" onclick="scrollToSection('registrationForm')">Register Now <i
-                                class="fas fa-arrow-down"></i></button>
-                        <button class="btn btn-outline" onclick="toggleMenu()">View Plans <i
-                                class="fas fa-bars"></i></button>
+                    <div class="hero-badge reveal-up">
+                        <span class="badge-tag">New Generation</span>
+                        <span class="badge-text" style="margin-left: 3px;">Fiber Network</span>
+                    </div>
+                    <h1 class="hero-title reveal-up">
+                        Experience The <span class="gradient-text">Future</span> Of Internet.
+                    </h1>
+                    <p class="hero-subtitle reveal-up">
+                        Hyper-fast speeds, zero lag, and 99.9% uptime. S.S. Broadband brings world-class connectivity to
+                        your doorstep.
+                    </p>
+                    <div class="hero-actions reveal-up">
+                        <button class="btn btn-primary" onclick="scrollToSection('registrationForm')">
+                            Register Now <i class="fas fa-arrow-right"></i>
+                        </button>
+                        <button class="btn btn-outline" onclick="toggleMenu()">
+                            View Plans <i class="fas fa-layer-group"></i>
+                        </button>
+                        <button class="btn btn-bandwidth" onclick="openBandwidthModal()">
+                            <i class="fas fa-tachometer-alt"></i> Order Bandwidth
+                        </button>
                     </div>
                 </div>
                 <div class="hero-graphic">
@@ -157,25 +179,37 @@
                 </div>
             </header>
 
-            <!-- Stats Bar -->
-            <section class="stats-section">
-                <div class="container">
-                    <div class="stats-grid reveal-up">
+            <!-- Immersive Stats Bar -->
+            <section class="stats-card-container container">
+                <div class="stats-card reveal-up">
+                    <div class="stats-grid">
                         <div class="stat-item">
-                            <div class="stat-number">1k+</div>
-                            <div class="stat-label">Happy Customers</div>
+                            <div class="stat-icon"><i class="fas fa-users"></i></div>
+                            <div class="stat-content">
+                                <div class="stat-number">1k+</div>
+                                <div class="stat-label">Happy Customers</div>
+                            </div>
                         </div>
                         <div class="stat-item">
-                            <div class="stat-number">99.9%</div>
-                            <div class="stat-label">Uptime</div>
+                            <div class="stat-icon"><i class="fas fa-bolt"></i></div>
+                            <div class="stat-content">
+                                <div class="stat-number">99.9%</div>
+                                <div class="stat-label">Network Uptime</div>
+                            </div>
                         </div>
                         <div class="stat-item">
-                            <div class="stat-number">24/7</div>
-                            <div class="stat-label">Support</div>
+                            <div class="stat-icon"><i class="fas fa-headset"></i></div>
+                            <div class="stat-content">
+                                <div class="stat-number">24/7</div>
+                                <div class="stat-label">Human Support</div>
+                            </div>
                         </div>
                         <div class="stat-item">
-                            <div class="stat-number">₹0</div>
-                            <div class="stat-label">Installation Charge</div>
+                            <div class="stat-icon"><i class="fas fa-gift"></i></div>
+                            <div class="stat-content">
+                                <div class="stat-number">₹0</div>
+                                <div class="stat-label">Installation Fee</div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -191,10 +225,16 @@
                     </div>
                     <div class="booking-wrapper card reveal-up delay-2">
                         <div class="booking-info">
-                            <img src="logo.png" alt="S.S. Broadband" class="form-logo"
-                                onerror="this.style.display='none';document.getElementById('formLogoFallback').style.display='flex'">
-                            <div id="formLogoFallback" class="form-logo-fallback" style="display:none">
-                                <i class="fas fa-wifi"></i>
+                            <div class="form-brand-header">
+                                <img src="logo.png" alt="S.S. Broadband" class="form-logo"
+                                    onerror="this.style.display='none';document.getElementById('formLogoFallback').style.display='flex'">
+                                <div id="formLogoFallback" class="form-logo-fallback" style="display:none">
+                                    <i class="fas fa-wifi"></i>
+                                </div>
+                                <div class="form-brand-text">
+                                    <span class="brand-name">S.S. Broadband</span>
+                                    <span class="brand-tag">Premium Fiber Internet</span>
+                                </div>
                             </div>
                             <h2>Get Connected.</h2>
                             <p>Register now and experience fiber internet with zero installation charges and 24×7
@@ -737,7 +777,7 @@
                         <div class="success-circle"><i class="fas fa-check"></i></div>
                     </div>
                     <h2>Successfully Submitted!</h2>
-                    <p>Our technical team will contact you within 2 hours for free installation.</p>
+                    <p>your user id will be appear within 2 hours , please check your portal repeatedly.</p>
                     <p class="success-dhanyawad">|| Dhanyawad 🙏 ||</p>
                     <button class="btn btn-primary" onclick="goHome()"><i class="fas fa-home"></i> Back to Home</button>
                 </div>
@@ -746,26 +786,121 @@
 
     </div><!-- /#mainContent -->
 
+    <!-- ===== ORDER BANDWIDTH MODAL ===== -->
+    <div class="bw-modal-overlay" id="bwModalOverlay" onclick="closeBandwidthModalOutside(event)">
+        <div class="bw-modal" id="bwModal">
+            <button class="bw-modal-close" onclick="closeBandwidthModal()"><i class="fas fa-times"></i></button>
+            <div class="bw-modal-header">
+                <div class="bw-modal-icon"><i class="fas fa-tachometer-alt"></i></div>
+                <h2>Order Bandwidth</h2>
+                <p>Fill the form below and we will contact you shortly.</p>
+            </div>
+            <div class="bw-modal-body">
+                <div class="bw-input-wrap">
+                    <label for="bwName"><i class="fas fa-user"></i> Full Name *</label>
+                    <input type="text" id="bwName" placeholder="Enter your full name" autocomplete="off">
+                </div>
+                <div class="bw-input-wrap">
+                    <label for="bwPhone"><i class="fas fa-phone"></i> Mobile Number *</label>
+                    <input type="tel" id="bwPhone" placeholder="10-digit mobile number" maxlength="10"
+                        autocomplete="off">
+                </div>
+                <div class="bw-input-wrap">
+                    <label for="bwEmail"><i class="fas fa-envelope"></i> Email Address *</label>
+                    <input type="email" id="bwEmail" placeholder="example@gmail.com" autocomplete="off">
+                </div>
+                <div class="bw-input-wrap">
+                    <label for="bwAddress"><i class="fas fa-map-marker-alt"></i> Full Address *</label>
+                    <textarea id="bwAddress" placeholder="Enter your complete address" rows="2"></textarea>
+                </div>
+                <div class="bw-input-wrap">
+                    <label><i class="fas fa-location-arrow"></i> Current Location (Google Maps)</label>
+                    <div class="bw-location-row">
+                        <input type="text" id="bwLocationText" placeholder="Lat, Long will appear here" readonly>
+                        <button class="btn-get-location" id="bwLocBtn" onclick="getBandwidthLocation()">
+                            <i class="fas fa-crosshairs"></i> Auto Detect
+                        </button>
+                    </div>
+                    <div id="bwLocationStatus" class="bw-location-status"></div>
+                    <!-- Fallback: manual Maps link paste -->
+                    <div class="bw-manual-location" id="bwManualLocationBox" style="display:none;">
+                        <div class="bw-manual-hint">
+                            <i class="fas fa-info-circle"></i>
+                            <span>Auto-detect failed. Open <strong>Google Maps</strong> → tap &amp; hold your location →
+                                copy the link → paste below.</span>
+                        </div>
+                        <div class="bw-manual-actions">
+                            <button class="btn-open-maps" onclick="openGoogleMapsForUser()">
+                                <i class="fas fa-map-marked-alt"></i> Open Google Maps
+                            </button>
+                        </div>
+                        <input type="url" id="bwManualLocationUrl" placeholder="Paste Google Maps link here (optional)"
+                            autocomplete="off" oninput="handleManualLocationInput(this)">
+                    </div>
+                </div>
+                <div class="bw-input-wrap">
+                    <label for="bwBandwidth"><i class="fas fa-wifi"></i> Required Bandwidth (Mbps) *</label>
+                    <div class="bw-chip-grid" id="bwBandwidthChips">
+                        <div class="bw-chip" onclick="selectBwChip(this)">100 Mbps</div>
+                        <div class="bw-chip" onclick="selectBwChip(this)">150 Mbps</div>
+                        <div class="bw-chip" onclick="selectBwChip(this)">200 Mbps</div>
+                        <div class="bw-chip" onclick="selectBwChip(this)">Custom</div>
+                    </div>
+                    <input type="text" id="bwCustomMbps" placeholder="Enter custom bandwidth (e.g. 250 Mbps)"
+                        style="display:none;margin-top:10px" autocomplete="off">
+                </div>
+                <button class="btn btn-bandwidth bw-submit-btn" id="bwSubmitBtn" onclick="submitBandwidthOrder()">
+                    <i class="fas fa-paper-plane"></i> Submit Order
+                </button>
+                <div id="bwStatusMsg" class="bw-status-msg"></div>
+            </div>
+        </div>
+    </div>
+
     <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-top">
-                <div class="footer-brand">
-                    <img src="logo.png" alt="S.S. Broadband" class="footer-logo"
-                        onerror="this.onerror=null;this.style.display='none'">
-                    <span>S.S. Broadband Services</span>
+    <footer class="main-footer">
+        <div class="footer-grid">
+            <div class="footer-section footer-brand">
+                <div class="footer-logo">
+                    <img src="logo.png" alt="S.S. Broadband" class="logo-img" onerror="this.style.display='none'">
                 </div>
-                <div class="footer-contact">
-                    <a href="mailto:s.s.broadbandservices02@gmail.com"><i class="fas fa-envelope"></i>
-                        s.s.broadbandservices02@gmail.com</a>
-                    <a href="tel:9516688921"><i class="fas fa-phone-alt"></i> 9516688921</a>
-                    <a href="tel:8959334650"><i class="fas fa-phone-alt"></i> 8959334650</a>
+                <h3 class="brand">S.S. Broadband</h3>
+                <p class="footer-desc">Empowering your digital life with hyper-fast fiber connectivity. Experience the
+                    future of internet today.</p>
+            </div>
+
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <div class="footer-contact-item"><i class="fas fa-chevron-right"></i> <a href="#"
+                        onclick="showSection('iptv')">IPTV Packages</a></div>
+                <div class="footer-contact-item"><i class="fas fa-chevron-right"></i> <a href="#"
+                        onclick="showSection('ott')">OTT Platforms</a></div>
+                <div class="footer-contact-item"><i class="fas fa-chevron-right"></i> <a href="#"
+                        onclick="showSection('payment')">Online Payment</a></div>
+            </div>
+
+            <div class="footer-section">
+                <h4>Contact Us</h4>
+                <div class="footer-contact-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>premises no. 1929, rampur chapar, jabalpur, madhya pradesh 482001</span>
+                </div>
+                <div class="footer-contact-item">
+                    <i class="fas fa-phone-alt"></i>
+                    <span>+91 95166 88921<br>+91 89593 34650</span>
+                </div>
+                <div class="footer-contact-item">
+                    <i class="fas fa-envelope"></i>
+                    <span>s.s.broadband.services.requests@gmail.com</span>
                 </div>
             </div>
-            <div class="footer-bottom">
-                <p>© 2024 S.S. Broadband Services | Har Pal, Har Ghar</p>
-                <div class="developer-credit">Website by <span class="dev-name">Harsh_Labs</span></div>
-            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2026 S.S. Broadband Services. All rights reserved.</p>
+            <p style="font-size: 0.7rem; opacity: 0.6; margin-top: 10px;">Har Pal, Har Ghar - Connecting Families
+                Together.</p>
+            <div class="developer-credit">Website by <span class="dev-name">S.S. Developers</span></div>
         </div>
     </footer>
 
